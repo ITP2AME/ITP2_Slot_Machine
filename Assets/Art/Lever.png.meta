@@ -1,0 +1,163 @@
+fileFormatVersion: 2
+guid: 021bf1dde68913843bda400e5900db03
+timeCreated: 1453568123
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Lever_0
+    21300002: Lever_1
+    21300004: Lever_2
+    21300006: Lever_3
+    21300008: Lever_4
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 72
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Lever_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2972
+        width: 302
+        height: 743
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -67, y: 205.61584}
+        - {x: -82, y: 195.61584}
+        - {x: -83, y: 191.61584}
+        - {x: -83, y: 19.615845}
+        - {x: -55, y: -199.38416}
+        - {x: -54, y: -201.38416}
+        - {x: -7, y: -201.38416}
+        - {x: 12, y: -192.38416}
+        - {x: 30, y: -40.384155}
+        - {x: 30, y: 205.61584}
+    - name: Lever_1
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2229
+        width: 302
+        height: 743
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -83, y: 102.711914}
+        - {x: -83, y: -202.28809}
+        - {x: 10, y: -202.28809}
+        - {x: 30, y: -87.288086}
+        - {x: 30, y: 102.711914}
+    - name: Lever_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1486
+        width: 302
+        height: 743
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -65, y: -6.1920776}
+        - {x: -83, y: -11.192078}
+        - {x: -83, y: -184.19208}
+        - {x: -77, y: -204.19208}
+        - {x: -4, y: -204.19208}
+        - {x: 27, y: -109.19208}
+        - {x: 27, y: -31.192078}
+        - {x: 7, y: -6.1920776}
+    - name: Lever_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 743
+        width: 302
+        height: 743
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -4, y: -91.09604}
+        - {x: -53, y: -91.09604}
+        - {x: -82, y: -105.09604}
+        - {x: -83, y: -110.09604}
+        - {x: -83, y: -182.09604}
+        - {x: -65, y: -204.09604}
+        - {x: -8, y: -204.09604}
+        - {x: 10, y: -200.09604}
+        - {x: 26, y: -184.09604}
+        - {x: 27, y: -177.09604}
+        - {x: 27, y: -108.09604}
+      - - {x: -52, y: 199.90396}
+        - {x: -49, y: 200.90396}
+        - {x: -49, y: 204.90396}
+        - {x: -54, y: 204.90396}
+        - {x: -54, y: 201.90396}
+    - name: Lever_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 302
+        height: 743
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 58, y: -93.5}
+        - {x: -17, y: -93.5}
+        - {x: -54, y: -103.5}
+        - {x: -54, y: -204.5}
+        - {x: 61, y: -204.5}
+        - {x: 83, y: -184.5}
+        - {x: 83, y: -111.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
