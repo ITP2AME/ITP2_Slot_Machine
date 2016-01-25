@@ -74,49 +74,67 @@ namespace Meshadieme
         public List<float> multiStored = new List<float>();
         public float multiCurrent = 1.0f;
         public int miniGame;
+        public float bet = 5.0f;
         public GameMode gMode;
         public string[] helpTexts; //Modify in editor
         public float[] result;
         Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, currMulti, extraMultiA, extraMultiB, extraMultiC, extraMultiD, extraMultiE, toBet;
         Button coinButton;
-        //int[] defShuffle = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0];
+        public bool leverMode;
+        int[] defShuffle = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0];
 
         protected override void Awake ()
         {
-            helpText = GM.Get().scene.miscRefs[0].GetComponent("Text") as Text;
-            coinText = GM.Get().scene.miscRefs[7].GetComponent("Text") as Text;
-            pinAText = GM.Get().scene.miscRefs[1].GetComponent("Text") as Text;
-            pinBText = GM.Get().scene.miscRefs[2].GetComponent("Text") as Text;
-            pinCText = GM.Get().scene.miscRefs[3].GetComponent("Text") as Text;
-            otherPinAText = GM.Get().scene.miscRefs[4].GetComponent("Text") as Text;
-            otherPinBText = GM.Get().scene.miscRefs[5].GetComponent("Text") as Text;
-            otherPinCText = GM.Get().scene.miscRefs[6].GetComponent("Text") as Text;
-            currMulti = GM.Get().scene.miscRefs[9].GetComponent("Text") as Text;
-            extraMultiA = GM.Get().scene.miscRefs[10].GetComponent("Text") as Text;
-            extraMultiB = GM.Get().scene.miscRefs[11].GetComponent("Text") as Text;
-            extraMultiC = GM.Get().scene.miscRefs[12].GetComponent("Text") as Text;
-            extraMultiD = GM.Get().scene.miscRefs[13].GetComponent("Text") as Text;
-            extraMultiE = GM.Get().scene.miscRefs[14].GetComponent("Text") as Text;
-            toBet = GM.Get().scene.miscRefs[8].GetComponent("Text") as Text;
+            helpText = GM.Get().scene.miscRefs[0].GetComponent<Text>();
+            coinText = GM.Get().scene.miscRefs[7].GetComponent<Text>();
+            pinAText = GM.Get().scene.miscRefs[1].GetComponent<Text>();
+            pinBText = GM.Get().scene.miscRefs[2].GetComponent<Text>();
+            pinCText = GM.Get().scene.miscRefs[3].GetComponent<Text>();
+            otherPinAText = GM.Get().scene.miscRefs[4].GetComponent<Text>();
+            otherPinBText = GM.Get().scene.miscRefs[5].GetComponent<Text>();
+            otherPinCText = GM.Get().scene.miscRefs[6].GetComponent<Text>();
+            currMulti = GM.Get().scene.miscRefs[9].GetComponentInChildren<Text>();
+            extraMultiA = GM.Get().scene.miscRefs[10].GetComponentInChildren<Text>();
+            extraMultiB = GM.Get().scene.miscRefs[11].GetComponentInChildren<Text>();
+            extraMultiC = GM.Get().scene.miscRefs[12].GetComponentInChildren<Text>();
+            extraMultiD = GM.Get().scene.miscRefs[13].GetComponentInChildren<Text>();
+            extraMultiE = GM.Get().scene.miscRefs[14].GetComponentInChildren<Text>();
+            toBet = GM.Get().scene.miscRefs[8].GetComponent<Text>();
             gMode = 0;
+            leverMode = true;
         }
 
         public void loadSelectedGame() {
 			Debug.Log ("GM.framework Loading");
-            //initSlots();
-            result = new float[2];
-            callMiniGame(MiniGames.something);
+            initSlots();
+            //callMiniGame(MiniGames.something);
 
         }
 
         void updateMulti()
         {
-            currMulti.text = multiCurrent.ToString();
-            extraMultiA.text = multiStored[0].ToString();
-            extraMultiB.text = multiStored[1].ToString();
-            extraMultiC.text = multiStored[2].ToString();
-            extraMultiD.text = multiStored[3].ToString();
-            extraMultiE.text = multiStored[4].ToString();
+            currMulti.text = "x" + multiCurrent.ToString();
+            Debug.Log(multiStored.Count);
+            if (multiStored.Count > 0)
+            {
+                extraMultiA.text = "x" + multiStored[0].ToString();
+            }
+            if (multiStored.Count > 1)
+            {
+                extraMultiB.text = "x" + multiStored[1].ToString();
+            }
+            if (multiStored.Count > 2)
+            {
+                extraMultiC.text = "x" + multiStored[2].ToString();
+            }
+            if (multiStored.Count > 3)
+            {
+                extraMultiD.text = "x" + multiStored[3].ToString();
+            }
+            if (multiStored.Count > 4)
+            {
+                extraMultiE.text = "x" + multiStored[4].ToString();
+            }
         }
         
 
@@ -155,11 +173,48 @@ namespace Meshadieme
 
         void initSlots()
         {
+            result = new float[2];
+            toBet.text = bet.ToString();
+            multiStored.Add(2.0f);
             updateMulti();
         }
 
-        void Update()
+        public void procCmds(int buttonIndex)
         {
+            switch (buttonIndex)
+            {
+                case 0: //Minus
+                    bet--;
+                    toBet.text = bet.ToString();
+                    break;
+                case 1: //Plus
+                    bet++;
+                    toBet.text = bet.ToString();
+                    break;
+                case 2: //Lever
+                    if (leverMode)
+                    {//First Pull
+                        leverMode = !leverMode;
+                        //start Spin / Shuffle Bag
+                    } else
+                    {//Second-Fourth Side Pull
+
+                    }
+                    //Playanimation
+                    break;
+                case 3: //Multi
+                    break;
+                case 4: //MultiA
+                    break;
+                case 5: //MultiB
+                    break;
+                case 6: //MultiC
+                    break;
+                case 7: //MultiD
+                    break;
+                case 8: //MultiE
+                    break;
+            }
 
         }
     }

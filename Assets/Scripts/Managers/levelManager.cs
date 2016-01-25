@@ -72,22 +72,22 @@ namespace Meshadieme {
 		public bool levelEditMode = false;
 		GameObject levelEditorPrefab ;
 		int levelEditorCamIndex;
-		int levelToLoad = 0;
-		bool loadLevelNow = false;
-		bool togglePrintOut = false; //toggle this to print out the variable list to put in gameManager
+		//int levelToLoad = 0;
+		//bool loadLevelNow = false;
+		//bool togglePrintOut = false; //toggle this to print out the variable list to put in gameManager
 		
 		// Private Level Editor Vars
 		private GameObject[,] levelEdit2DTiles;
 		private int[,] levelEdit2DNums;
 //		private levelData levelEditLoaded;
 //		private level2Data levelEdit2DLoaded;
-		private int xSize = 1;
-		private int ySize = 1;
-		private int nWidth = 64;
-		private int nHeight = 64;
-		private int numOfTiles;
-		private int selectX = 0;
-		private int selectY = 0;
+		//private int xSize = 1;
+		//private int ySize = 1;
+		//private int nWidth = 64;
+		//private int nHeight = 64;
+		//private int numOfTiles;
+		//private int selectX = 0;
+		//private int selectY = 0;
 		
 		//Current level loaded objects
 //		private var currentLevelData : levelData;
