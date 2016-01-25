@@ -103,9 +103,9 @@ namespace Meshadieme
 
         public void loadSelectedGame() {
 			Debug.Log ("GM.framework Loading");
-            //initSlots();
+            initSlots();
             result = new float[2];
-            callMiniGame(MiniGames.something);
+            //callMiniGame(MiniGames.something);
 
         }
 
