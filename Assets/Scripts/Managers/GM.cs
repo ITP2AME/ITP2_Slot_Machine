@@ -71,9 +71,9 @@ namespace Meshadieme
         }
 
         static GM gameManager; //Static GameManager Object (accessible by all)
-        static bool gamePause = false;
-        static gType gameType = gType.Side2D;
-        static gVersion gameVersion = gVersion.Standard;
+        //static bool gamePause = false;
+        //static gType gameType = gType.Side2D;
+        //static gVersion gameVersion = gVersion.Standard;
 
         [HideInInspector]
         public parentManager[] managers;
@@ -93,8 +93,8 @@ namespace Meshadieme
         public slotsGD data;
         //[HideInInspector]
         //public slotsGM menus;
-        //[HideInInspector]
-        //public IOManager IOMan;
+        [HideInInspector]
+        public IOManager IOMan;
         //[HideInInspector]
         //public levelManager levelMan;
         //	var collision : gameCollision;
@@ -199,7 +199,7 @@ namespace Meshadieme
             {
                 data.initGameData();
                 //audioMan.initSound();
-                //if (useIChains) IOMan.initInputs();
+                if (useIChains) IOMan.initInputs();
                 #if UNITY_EDITOR
                 if (!debugSaveMode) data.saveGame();
                 #else
@@ -255,7 +255,7 @@ namespace Meshadieme
             #else
 				data.saveGame();
             #endif
-            Application.LoadLevel(Scenes.MAIN.ToString());
+            SceneManager.LoadScene((int) Scenes.MAIN);
             //			yield return new WaitForSeconds(0.1f);
             currentScene = Scenes.MAIN;
             secondStart();
@@ -271,9 +271,9 @@ namespace Meshadieme
             List<parentManager> list = new List<parentManager>();
             List<debugToggle> toggles = new List<debugToggle>();
             gameFramework newfw;
-            gameMenus newgm;
+            //gameMenus newgm;
             gameData newgd;
-            IOManager newio;
+            //IOManager newio;
             foreach (parentManager joint in gameObject.GetComponents<parentManager>())
             {
                 list.Add(joint);
@@ -281,9 +281,9 @@ namespace Meshadieme
                 joint.debugMode.named = joint.ToString();
                 toggles.Add(joint.debugMode);
                 newfw = joint as gameFramework;
-                newgm = joint as gameMenus;
+                //newgm = joint as gameMenus;
                 newgd = joint as gameData;
-                newio = joint as IOManager;
+                //newio = joint as IOManager;
                 if (newfw != null)
                 {
                     framework = newfw as slotsGF;
@@ -447,26 +447,23 @@ namespace Meshadieme
         /// * If current scene is Normal Level Scene send to IOManager Command Processing function. (commands are pre-defined sequences of inputs)
         /// * If scene is any other scene (logically by current design it should be a menu scene of some kind) so send to gameMenus input Processing.
         /// </summary>
-        public void inputProcessing()
+        public void inputProcessing(GameObject go)
         {
-            //Debug.Log("GM_InputProc() = " + UIButton.current);
-            //if (UIButton.current != null)
-            //{
-            //    GameObject button = UIButton.current.gameObject;
-            //    if (currentScene == Scenes.MAIN_MENU || currentScene == Scenes.SPLASH || currentScene == Scenes.STORYBOARD)
-            //    {
-            //        // Out of game scenes (all considered menus)
-            //        menus.inputProcessing(currentScene, button);
-            //    }
-            //    else {
-            //        // In game scenes
-            //        menus.inputProcessing(currentScene, button);
-            //        //					if (useIChains) {
-            //        //						IOMan.processCommands(currentScene, button);
-            //        //					} else {
-            //        //						framework.processCommands(currentScene, button);
-            //        //					}
-            //    }
+            Debug.Log("GM_InputProc() = " + go);
+            if (currentScene == Scenes.MAIN)
+            {
+                //// Out of game scenes (all considered menus)
+                //menus.inputProcessing(currentScene, button);
+                if (useIChains) {
+                    //IOMan.processCommands(currentScene, scene.getButtonIndex(go), true);
+                } else {
+                    framework.procCmds(scene.getButtonIndex(go));
+                }
+            }
+            //else {
+            //    // In menu scenes
+            //    menus.inputProcessing(currentScene, button);
+            //    
             //}
         }
 

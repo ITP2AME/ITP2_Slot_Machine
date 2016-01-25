@@ -46,8 +46,8 @@ namespace Meshadieme {
 			return System.Array.IndexOf(buttonRefs, gObj);
 		}
 
-		public void inputProcessing () {
-			GM.Get ().inputProcessing ();
+		public void inputProcessing (GameObject go) {
+			GM.Get ().inputProcessing (go);
 		}
 		
 	}

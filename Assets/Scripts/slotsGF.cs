@@ -68,57 +68,83 @@ namespace Meshadieme
     {
         something,
     }
-    public class slotsGF : gameFramework {
+    public class slotsGF : gameFramework
+    {
 
         public float gbp = 50.0f;
-        public List<float> multiStored = new List<float>();
+        public int[] multiStored = new int[] { 1, 0, 0 };
         public float multiCurrent = 1.0f;
         public int miniGame;
+        public float bet = 5.0f;
         public GameMode gMode;
         public string[] helpTexts; //Modify in editor
         public float[] result;
-        Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, currMulti, extraMultiA, extraMultiB, extraMultiC, extraMultiD, extraMultiE, toBet;
+        Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet;
         Button coinButton;
-        //int[] defShuffle = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0];
+        public bool leverMode;
+        bool spinning = false;
+        int[] defShuffle = new int[] { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
 
-        protected override void Awake ()
+        protected override void Awake()
         {
-            helpText = GM.Get().scene.miscRefs[0].GetComponent("Text") as Text;
-            coinText = GM.Get().scene.miscRefs[7].GetComponent("Text") as Text;
-            pinAText = GM.Get().scene.miscRefs[1].GetComponent("Text") as Text;
-            pinBText = GM.Get().scene.miscRefs[2].GetComponent("Text") as Text;
-            pinCText = GM.Get().scene.miscRefs[3].GetComponent("Text") as Text;
-            otherPinAText = GM.Get().scene.miscRefs[4].GetComponent("Text") as Text;
-            otherPinBText = GM.Get().scene.miscRefs[5].GetComponent("Text") as Text;
-            otherPinCText = GM.Get().scene.miscRefs[6].GetComponent("Text") as Text;
-            currMulti = GM.Get().scene.miscRefs[9].GetComponent("Text") as Text;
-            extraMultiA = GM.Get().scene.miscRefs[10].GetComponent("Text") as Text;
-            extraMultiB = GM.Get().scene.miscRefs[11].GetComponent("Text") as Text;
-            extraMultiC = GM.Get().scene.miscRefs[12].GetComponent("Text") as Text;
-            extraMultiD = GM.Get().scene.miscRefs[13].GetComponent("Text") as Text;
-            extraMultiE = GM.Get().scene.miscRefs[14].GetComponent("Text") as Text;
-            toBet = GM.Get().scene.miscRefs[8].GetComponent("Text") as Text;
+            helpText = GM.Get().scene.miscRefs[0].GetComponent<Text>();
+            coinText = GM.Get().scene.miscRefs[7].GetComponent<Text>();
+            pinAText = GM.Get().scene.miscRefs[1].GetComponent<Text>();
+            pinBText = GM.Get().scene.miscRefs[2].GetComponent<Text>();
+            pinCText = GM.Get().scene.miscRefs[3].GetComponent<Text>();
+            otherPinAText = GM.Get().scene.miscRefs[4].GetComponent<Text>();
+            otherPinBText = GM.Get().scene.miscRefs[5].GetComponent<Text>();
+            otherPinCText = GM.Get().scene.miscRefs[6].GetComponent<Text>();
+            extraMultiA = GM.Get().scene.buttonRefs[3].GetComponent<Text>();
+            extraMultiB = GM.Get().scene.buttonRefs[4].GetComponent<Text>();
+            extraMultiC = GM.Get().scene.buttonRefs[5].GetComponent<Text>();
+            toBet = GM.Get().scene.miscRefs[8].GetComponent<Text>();
             gMode = 0;
+            leverMode = true;
         }
 
-        public void loadSelectedGame() {
-			Debug.Log ("GM.framework Loading");
+        public void loadSelectedGame()
+        {
+            Debug.Log("GM.framework Loading");
             initSlots();
-            result = new float[2];
             //callMiniGame(MiniGames.something);
 
         }
 
         void updateMulti()
         {
-            currMulti.text = multiCurrent.ToString();
-            extraMultiA.text = multiStored[0].ToString();
-            extraMultiB.text = multiStored[1].ToString();
-            extraMultiC.text = multiStored[2].ToString();
-            extraMultiD.text = multiStored[3].ToString();
-            extraMultiE.text = multiStored[4].ToString();
+            Debug.Log(multiStored.Length);
+            if (multiStored.Length > 0)
+            {
+                extraMultiA.text = multiStored[0].ToString() + " Left";
+            }
+            if (multiStored.Length > 1)
+            {
+                extraMultiB.text = multiStored[1].ToString() + " Left";
+            }
+            if (multiStored.Length > 2)
+            {
+                extraMultiC.text = multiStored[2].ToString() + " Left";
+            }
         }
-        
+
+        IEnumerator spinTills()
+        {
+            spinning = true;
+            while (spinning)
+            {
+                int newImg = Random.Range(0, 5);
+                Sprite tempSprite = Resources.Load<Sprite>("symbols_" + newImg);
+                Debug.Log(tempSprite);
+                GM.Get().scene.miscRefs[1].GetComponent<SpriteRenderer>().sprite = tempSprite;
+                yield return new WaitForSeconds(0.5f);
+            }
+            yield return null;
+        }
+        void stopTills(int stopAt)
+        {
+            spinning = false;
+        }
 
         //GM.Get().scene.miscRefs[0] = "Welcome to Paper Slots"; <-- Example how to reference stuff
         // miscref are in editor in _SM game object along with button ref for buttons.
@@ -137,16 +163,26 @@ namespace Meshadieme
                     // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
                     break;
             }
-            return; 
+            return;
         }
 
         //call this at the end of your mini game to take the results
-        public void endMiniGame ()
+        public void endMiniGame()
         {
             GM.Get().scene.miscRefs[15].SetActive(true);
             GM.Get().scene.miscRefs[16].SetActive(false);
-            if (multiStored.Capacity > 4) multiStored.RemoveAt(0);
-            multiStored.Add(result[0]);
+            switch ((int) result[0])
+            {
+                case 2:
+                    multiStored[0]++;
+                    break;
+                case 3:
+                    multiStored[1]++;
+                    break;
+                case 4:
+                    multiStored[2]++;
+                    break;
+            }
             updateMulti();
             gbp += result[1];
             coinText.text = gbp.ToString();
@@ -155,11 +191,48 @@ namespace Meshadieme
 
         void initSlots()
         {
+            result = new float[2];
+            toBet.text = bet.ToString();
             updateMulti();
         }
 
-        void Update()
+        public void procCmds(int buttonIndex)
         {
+            switch (buttonIndex)
+            {
+                case 0: //Lever
+                    leverMode = !leverMode;
+                    if (leverMode)
+                    {//First Pull
+                     //start Spin / Shuffle Bag
+                        StartCoroutine(spinTills());
+                    }
+                    else
+                    {//Second-Fourth Side Pull
+
+                        stopTills(1);
+                    }
+                    //Playanimation
+                    break;
+                case 1: //Minus
+                    bet--;
+                    toBet.text = bet.ToString();
+                    break;
+                case 2: //Plus
+                    bet++;
+                    toBet.text = bet.ToString();
+                    break;
+                case 3: //MultiA
+                    Debug.Log("x2");
+
+                    break;
+                case 4: //MultiB
+                    Debug.Log("x3");
+                    break;
+                case 5: //MultiC
+                    Debug.Log("x4");
+                    break;
+            }
 
         }
     }
