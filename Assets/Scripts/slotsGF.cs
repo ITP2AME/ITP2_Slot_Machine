@@ -72,7 +72,6 @@ namespace Meshadieme
     {
 
         public float gbp = 50.0f;
-        public int[] multiStored = new int[] { 1, 0, 0 };
         public float multiCurrent = 1.0f;
         public int miniGame;
         public float bet = 5.0f;
@@ -82,12 +81,9 @@ namespace Meshadieme
         Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet;
         Button coinButton;
         public bool leverMode;
-<<<<<<< HEAD
-        int[] defShuffle = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0];
-=======
         bool spinning = false;
+        int[] multiStored = new int[] { 1, 0, 0 };
         int[] defShuffle = new int[] { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
->>>>>>> c4d4dc6ef46fb0778fe7effb4e3f96d0f1aef687
 
         protected override void Awake()
         {
@@ -99,31 +95,18 @@ namespace Meshadieme
             otherPinAText = GM.Get().scene.miscRefs[4].GetComponent<Text>();
             otherPinBText = GM.Get().scene.miscRefs[5].GetComponent<Text>();
             otherPinCText = GM.Get().scene.miscRefs[6].GetComponent<Text>();
-<<<<<<< HEAD
-            currMulti = GM.Get().scene.miscRefs[9].GetComponentInChildren<Text>();
-            extraMultiA = GM.Get().scene.miscRefs[10].GetComponentInChildren<Text>();
-            extraMultiB = GM.Get().scene.miscRefs[11].GetComponentInChildren<Text>();
-            extraMultiC = GM.Get().scene.miscRefs[12].GetComponentInChildren<Text>();
-            extraMultiD = GM.Get().scene.miscRefs[13].GetComponentInChildren<Text>();
-            extraMultiE = GM.Get().scene.miscRefs[14].GetComponentInChildren<Text>();
-=======
             extraMultiA = GM.Get().scene.buttonRefs[3].GetComponent<Text>();
             extraMultiB = GM.Get().scene.buttonRefs[4].GetComponent<Text>();
             extraMultiC = GM.Get().scene.buttonRefs[5].GetComponent<Text>();
->>>>>>> c4d4dc6ef46fb0778fe7effb4e3f96d0f1aef687
             toBet = GM.Get().scene.miscRefs[8].GetComponent<Text>();
             gMode = 0;
             leverMode = true;
+            result = new float[2];
         }
-
-<<<<<<< HEAD
-        public void loadSelectedGame() {
-			Debug.Log ("GM.framework Loading");
-=======
+        
         public void loadSelectedGame()
         {
             Debug.Log("GM.framework Loading");
->>>>>>> c4d4dc6ef46fb0778fe7effb4e3f96d0f1aef687
             initSlots();
             //callMiniGame(MiniGames.something);
 
@@ -131,43 +114,10 @@ namespace Meshadieme
 
         void updateMulti()
         {
-<<<<<<< HEAD
-            currMulti.text = "x" + multiCurrent.ToString();
-            Debug.Log(multiStored.Count);
-            if (multiStored.Count > 0)
-            {
-                extraMultiA.text = "x" + multiStored[0].ToString();
-            }
-            if (multiStored.Count > 1)
-            {
-                extraMultiB.text = "x" + multiStored[1].ToString();
-            }
-            if (multiStored.Count > 2)
-            {
-                extraMultiC.text = "x" + multiStored[2].ToString();
-            }
-            if (multiStored.Count > 3)
-            {
-                extraMultiD.text = "x" + multiStored[3].ToString();
-            }
-            if (multiStored.Count > 4)
-            {
-                extraMultiE.text = "x" + multiStored[4].ToString();
-            }
-=======
             Debug.Log(multiStored.Length);
-            if (multiStored.Length > 0)
-            {
-                extraMultiA.text = multiStored[0].ToString() + " Left";
-            }
-            if (multiStored.Length > 1)
-            {
-                extraMultiB.text = multiStored[1].ToString() + " Left";
-            }
-            if (multiStored.Length > 2)
-            {
-                extraMultiC.text = multiStored[2].ToString() + " Left";
-            }
+            extraMultiA.text = multiStored[0].ToString() + " Left";
+            extraMultiB.text = multiStored[1].ToString() + " Left";
+            extraMultiC.text = multiStored[2].ToString() + " Left";
         }
 
         IEnumerator spinTills()
@@ -186,7 +136,6 @@ namespace Meshadieme
         void stopTills(int stopAt)
         {
             spinning = false;
->>>>>>> c4d4dc6ef46fb0778fe7effb4e3f96d0f1aef687
         }
 
         //GM.Get().scene.miscRefs[0] = "Welcome to Paper Slots"; <-- Example how to reference stuff
@@ -234,12 +183,7 @@ namespace Meshadieme
 
         void initSlots()
         {
-            result = new float[2];
             toBet.text = bet.ToString();
-<<<<<<< HEAD
-            multiStored.Add(2.0f);
-=======
->>>>>>> c4d4dc6ef46fb0778fe7effb4e3f96d0f1aef687
             updateMulti();
         }
 
@@ -247,38 +191,6 @@ namespace Meshadieme
         {
             switch (buttonIndex)
             {
-<<<<<<< HEAD
-                case 0: //Minus
-                    bet--;
-                    toBet.text = bet.ToString();
-                    break;
-                case 1: //Plus
-                    bet++;
-                    toBet.text = bet.ToString();
-                    break;
-                case 2: //Lever
-                    if (leverMode)
-                    {//First Pull
-                        leverMode = !leverMode;
-                        //start Spin / Shuffle Bag
-                    } else
-                    {//Second-Fourth Side Pull
-
-                    }
-                    //Playanimation
-                    break;
-                case 3: //Multi
-                    break;
-                case 4: //MultiA
-                    break;
-                case 5: //MultiB
-                    break;
-                case 6: //MultiC
-                    break;
-                case 7: //MultiD
-                    break;
-                case 8: //MultiE
-=======
                 case 0: //Lever
                     leverMode = !leverMode;
                     if (leverMode)
@@ -303,14 +215,12 @@ namespace Meshadieme
                     break;
                 case 3: //MultiA
                     Debug.Log("x2");
-
                     break;
                 case 4: //MultiB
                     Debug.Log("x3");
                     break;
                 case 5: //MultiC
                     Debug.Log("x4");
->>>>>>> c4d4dc6ef46fb0778fe7effb4e3f96d0f1aef687
                     break;
             }
 

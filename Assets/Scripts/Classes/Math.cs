@@ -11,22 +11,22 @@ namespace Meshadieme
         class Math
         {
             //Decide later to pass by reference or value etc.
-            public IEnumerable<T> FisherYatesShuffle<T>(IEnumerable<T> toShuffle, int Count) 
-            {
-                //List<T> shuffling = new List<T>(toShuffle);
-                //for (int i = shuffling.Count; i > 1; i--)
-                //{
-                //    int j = Random.Range(i, shuffling.Count);
-                //    T temp = shuffling[j];
-                foreach (T index in toShuffle)
-                {
-                    int j = Random.Range(i, Count);
-                    T temp = toShuffle[j];
+            //public IEnumerable<T> FisherYatesShuffle<T>(IEnumerable<T> toShuffle, int Count) 
+            //{
+            //    //List<T> shuffling = new List<T>(toShuffle);
+            //    //for (int i = shuffling.Count; i > 1; i--)
+            //    //{
+            //    //    int j = Random.Range(i, shuffling.Count);
+            //    //    T temp = shuffling[j];
+            //    foreach (T index in toShuffle)
+            //    {
+            //        int j = Random.Range(i, Count);
+            //        T temp = toShuffle[j];
 
 
 
-                }
-            }
+            //    }
+            //}
         }
 
         class shuffleBag
@@ -44,7 +44,7 @@ namespace Meshadieme
                 {
                     shuffle.AddRange(defBag);
                 }
-                shuffle = Math.FisherYatesShuffle(shuffle);
+                //shuffle = Math.FisherYatesShuffle(shuffle);
             }
         }
     }
