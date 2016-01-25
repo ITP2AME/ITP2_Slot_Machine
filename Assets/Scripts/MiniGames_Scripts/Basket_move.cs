@@ -45,11 +45,13 @@ public class Basket_move : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D col)
     {
 
-        if (col.gameObject.tag == "Cherry")
+        if (col.gameObject.tag == "Fruit")
         {
 
             Destroy(col.gameObject);
 
         }
     }
+
+ 
 }
