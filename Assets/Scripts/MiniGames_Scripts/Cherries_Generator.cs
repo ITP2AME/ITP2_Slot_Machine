@@ -4,8 +4,9 @@ using System.Collections;
 public class Cherries_Generator : MonoBehaviour {
 
     public Transform Cherry;
-
     public Transform Lemon;
+    public Transform Orange;
+    public Transform Banana;
 
     Transform CurrentFruit;
 
@@ -14,7 +15,6 @@ public class Cherries_Generator : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        //Create_Fruits();
 
         InvokeRepeating("Create_Fruits", 0, 3);
 
@@ -43,9 +43,12 @@ public class Cherries_Generator : MonoBehaviour {
 
     void RandomGenerator() {
 
-        int randomInt = Random.Range(0, 2);
+        int randomInt = Random.Range(0, 4);
 
-        if (randomInt == 1) { CurrentFruit = Lemon;}
-        else                { CurrentFruit = Cherry; }
+        if      (randomInt == 1) { CurrentFruit = Lemon; }
+        else if (randomInt == 2) { CurrentFruit = Cherry; }
+        else if (randomInt == 3) { CurrentFruit = Orange; }
+        else                     { CurrentFruit = Banana; }
     }
+
 }
