@@ -82,6 +82,7 @@ namespace Meshadieme
         Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet;
         Button coinButton;
         public bool leverMode;
+        public Animator leverAnimator; //An animator controlling the lever is declared
         bool spinning, otherSpinA, otherSpinB, otherSpinC = false;
         int[] multiStored = new int[] { 1, 0, 0 };
         int[] defShuffle = new int[] { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
@@ -112,6 +113,7 @@ namespace Meshadieme
             toBet = GM.Get().scene.miscRefs[8].GetComponent<Text>();
             gMode = 0;
             leverMode = true;
+            leverAnimator = GameObject.FindGameObjectWithTag("lever").GetComponent<Animator>(); //Accessing the animator componenet on the lever object
             result = new float[2];
             sbDef = new shuffleBag(10, defShuffle); //Scale is the number of times the shuffle bag stores multiple copies of the ratio before resetting (essentially maximimum times the best results should repeat kind of)
             sbTempA = new shuffleBag(10, shuffleA);
@@ -181,7 +183,6 @@ namespace Meshadieme
             }
             Debug.Log("The Results are PinA = " + results[0] + " / PinB = " + results[1] + " / PinC = " + results[2]);
             leverMode = !leverMode;
-
             //Martin Animate lever going up automatically here, this will remove the need for a second right click input.
             //Martin use results[0 - 2] for where to stop the image
 
@@ -312,7 +313,7 @@ namespace Meshadieme
                 case 0: //Lever Left Click (level goes up / down)
                     if (leverMode)
                     {//First Pull
-                     //Martin Animate lever going down here
+                        leverAnimator.SetBool("LeverPulled", true); //makes the lever go down
                         Debug.Log("Lever Down");
                         leverMode = !leverMode;
                         StartCoroutine(spinPins());
@@ -327,8 +328,10 @@ namespace Meshadieme
                     }
                     else
                     {//Second - Fourth Side Pull
+                        
                         if (otherPinState < 3)
                         {
+                            leverAnimator.SetTrigger("LeverPulledRight"); //makes the lever go right and back again
                             Debug.Log("Lever Side = " + otherPinState);
                             //Martin Animate Side Pull here and make it go back automatically
                             switch (otherPinState)
@@ -341,8 +344,10 @@ namespace Meshadieme
                                     break;
                                 case 2:
                                     stopOtherPinC();
+                                    leverAnimator.SetBool("LeverPulled", false); //makes the lever go up
                                     break;
                             }
+                            
                             otherPinState++;
                         }
                     }
