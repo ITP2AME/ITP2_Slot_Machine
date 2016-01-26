@@ -81,8 +81,15 @@ namespace Meshadieme
         public float[] result;
         Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet;
         Button coinButton;
+
         public bool leverMode;
+        public GameObject leverGameObject; //a reference to the lever game object is declared
         public Animator leverAnimator; //An animator controlling the lever is declared
+        public AudioSource[] leverAudio; //a reference to the lever audio is declared
+        AudioSource soundLeverDown;
+        AudioSource soundLeverUp;
+        AudioSource soundLeverRight;
+
         bool spinning, otherSpinA, otherSpinB, otherSpinC = false;
         int[] multiStored = new int[] { 1, 0, 0 };
         int[] defShuffle = new int[] { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
@@ -112,8 +119,15 @@ namespace Meshadieme
             extraMultiC = GM.Get().scene.buttonRefs[5].GetComponent<Text>();
             toBet = GM.Get().scene.miscRefs[8].GetComponent<Text>();
             gMode = 0;
+
             leverMode = true;
-            leverAnimator = GameObject.FindGameObjectWithTag("lever").GetComponent<Animator>(); //Accessing the animator componenet on the lever object
+            leverGameObject = GameObject.FindGameObjectWithTag("lever"); //Accessing the lever game object
+            leverAnimator = leverGameObject.GetComponent<Animator>(); //Accessing the animator componenet on the lever object
+            leverAudio = leverGameObject.GetComponents<AudioSource>(); //Accessing all the sound componenets on the lever object
+            soundLeverDown = leverAudio[0]; //references to specific audio sources
+            soundLeverUp = leverAudio[1];
+            soundLeverRight = leverAudio[2];
+
             result = new float[2];
             sbDef = new shuffleBag(10, defShuffle); //Scale is the number of times the shuffle bag stores multiple copies of the ratio before resetting (essentially maximimum times the best results should repeat kind of)
             sbTempA = new shuffleBag(10, shuffleA);
@@ -314,6 +328,7 @@ namespace Meshadieme
                     if (leverMode)
                     {//First Pull
                         leverAnimator.SetBool("LeverPulled", true); //makes the lever go down
+                        soundLeverDown.Play(); // plays a lever sound
                         Debug.Log("Lever Down");
                         leverMode = !leverMode;
                         StartCoroutine(spinPins());
@@ -332,8 +347,8 @@ namespace Meshadieme
                         if (otherPinState < 3)
                         {
                             leverAnimator.SetTrigger("LeverPulledRight"); //makes the lever go right and back again
+                            soundLeverRight.Play(); // plays a lever sound
                             Debug.Log("Lever Side = " + otherPinState);
-                            //Martin Animate Side Pull here and make it go back automatically
                             switch (otherPinState)
                             {
                                 case 0:
@@ -345,6 +360,7 @@ namespace Meshadieme
                                 case 2:
                                     stopOtherPinC();
                                     leverAnimator.SetBool("LeverPulled", false); //makes the lever go up
+                                    soundLeverUp.Play(); // plays a lever sound
                                     break;
                             }
                             
