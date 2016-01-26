@@ -10,23 +10,20 @@ namespace Meshadieme
     {
         class Math
         {
-            //Decide later to pass by reference or value etc.
-            //public IEnumerable<T> FisherYatesShuffle<T>(IEnumerable<T> toShuffle, int Count) 
-            //{
-            //    //List<T> shuffling = new List<T>(toShuffle);
-            //    //for (int i = shuffling.Count; i > 1; i--)
-            //    //{
-            //    //    int j = Random.Range(i, shuffling.Count);
-            //    //    T temp = shuffling[j];
-            //    foreach (T index in toShuffle)
-            //    {
-            //        int j = Random.Range(i, Count);
-            //        T temp = toShuffle[j];
-
-
-
-            //    }
-            //}
+            public static List<T> FisherYatesShuffle<T>(List<T> toShuffle)
+            {
+                for (int i = toShuffle.Count - 1; i > 0; i--)
+                {
+                    int j = Random.Range(i, toShuffle.Count);
+                    //Debug.Log(j);
+                    //Debug.Log(i);
+                    //Debug.Log(toShuffle.Count);
+                    T temp = toShuffle[j];
+                    toShuffle[j] = toShuffle[i];
+                    toShuffle[i] = temp;
+                }
+                return toShuffle;
+            }
         }
 
         class shuffleBag
@@ -39,12 +36,27 @@ namespace Meshadieme
             {
                 toScale = scale;
                 defBag = ratio;
+                resetBag();
+                reshuffle();
+            }
+
+            public void resetBag()
+            {
                 shuffle.AddRange(defBag);
                 for (int i = 1; i < toScale; i++)
                 {
                     shuffle.AddRange(defBag);
                 }
-                //shuffle = Math.FisherYatesShuffle(shuffle);
+            }
+
+            public void reshuffle() {  shuffle = Math.FisherYatesShuffle(shuffle);  }
+
+            public int Next()
+            {
+                if (shuffle.Count == 0) resetBag();
+                int toReturn = shuffle[0];
+                shuffle.RemoveAt(0);
+                return toReturn;
             }
         }
     }
