@@ -85,17 +85,25 @@ namespace Meshadieme
         public bool leverMode;
         public GameObject leverGameObject; //a reference to the lever game object is declared
         public Animator leverAnimator; //An animator controlling the lever is declared
-        public AudioSource[] leverAudio; //a reference to the lever audio is declared
+        AudioSource[] leverAudio; //a reference to the lever audio is declared
         AudioSource soundLeverDown;
-        AudioSource soundLeverUp;
         AudioSource soundLeverRight;
+
+        Sprite[] pinSymbols;
+        public Sprite pinSymbolGrape;
+        public Sprite pinSymbolBell;
+        public Sprite pinSymbolDimond;
+        public Sprite pinSymbolSeven;
+        public Sprite pinSymbolCherry;
+        public Sprite pinSymbolClover;
+
 
         bool spinning, otherSpinA, otherSpinB, otherSpinC = false;
         int[] multiStored = new int[] { 1, 0, 0 };
-        int[] defShuffle = new int[] { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0, 0 };
-        int[] shuffleA = new int[] { 4, 4, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0 };
-        int[] shuffleB = new int[] { 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0 };
-        int[] shuffleC = new int[] { 4, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 0, 0, 0 };
+        int[] defShuffle = new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 };
+        int[] shuffleA = new int[] { 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0};
+        int[] shuffleB = new int[] { 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0 };
+        int[] shuffleC = new int[] { 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0 };
         shuffleBag toUse;
         shuffleBag sbDef; //default shuffleBag random result
         shuffleBag sbTempA; //Custom shufflebag random result for when modified by secondary Pins
@@ -125,10 +133,17 @@ namespace Meshadieme
             leverAnimator = leverGameObject.GetComponent<Animator>(); //Accessing the animator componenet on the lever object
             leverAudio = leverGameObject.GetComponents<AudioSource>(); //Accessing all the sound componenets on the lever object
             soundLeverDown = leverAudio[0]; //references to specific audio sources
-            soundLeverUp = leverAudio[1];
-            soundLeverRight = leverAudio[2];
+            soundLeverRight = leverAudio[1];
 
-            result = new float[2];
+            pinSymbols = new Sprite[6];
+            pinSymbols[0] = pinSymbolGrape;
+            pinSymbols[1] = pinSymbolBell;
+            pinSymbols[2] = pinSymbolDimond;
+            pinSymbols[3] = pinSymbolSeven;
+            pinSymbols[4] = pinSymbolCherry;
+            pinSymbols[5] = pinSymbolClover;
+
+        result = new float[2];
             sbDef = new shuffleBag(10, defShuffle); //Scale is the number of times the shuffle bag stores multiple copies of the ratio before resetting (essentially maximimum times the best results should repeat kind of)
             sbTempA = new shuffleBag(10, shuffleA);
             sbTempB = new shuffleBag(10, shuffleB);
@@ -156,13 +171,22 @@ namespace Meshadieme
             Debug.Log("SpinPins");
             StartCoroutine(stopPins());
             spinning = true;
+
+            int randomSymbol = 0;
+            int tempRandomymbol = 0;
+            int pinNumber =1;
             while (spinning)
             {
-                int newImg = Random.Range(0, 5);
-                Sprite tempSprite = Resources.Load<Sprite>("symbols_" + newImg);
-                //Debug.Log(tempSprite);
-                GM.Get().scene.miscRefs[1].GetComponent<SpriteRenderer>().sprite = tempSprite;
-                yield return new WaitForSeconds(0.5f);
+                for (;pinNumber<=3;pinNumber++)
+                {
+                    randomSymbol = Random.Range(0, 6);
+                    while (randomSymbol == tempRandomymbol)
+                        randomSymbol = Random.Range(0, 6);
+                    tempRandomymbol = randomSymbol;
+                    GM.Get().scene.miscRefs[pinNumber].GetComponent<SpriteRenderer>().sprite = pinSymbols[randomSymbol];
+                }
+                pinNumber = 1;
+                yield return new WaitForSeconds(0.05f);
             }
             yield return null;
         }
@@ -170,7 +194,7 @@ namespace Meshadieme
         IEnumerator stopPins()
         {
             Debug.Log("StopPins");
-            yield return new WaitForSeconds(8);
+            yield return new WaitForSeconds(5);
             otherSpinA = false;
             otherSpinB = false;
             otherSpinC = false;
@@ -196,11 +220,40 @@ namespace Meshadieme
                 results[i] = toUse.Next();
             }
             Debug.Log("The Results are PinA = " + results[0] + " / PinB = " + results[1] + " / PinC = " + results[2]);
-            leverMode = !leverMode;
-            //Martin Animate lever going up automatically here, this will remove the need for a second right click input.
-            //Martin use results[0 - 2] for where to stop the image
 
-            callMiniGame(MiniGames.something);
+            for(int i = 0; i<3; i++)
+            {
+                switch (results[i])
+                {
+                    case 0:
+                        GM.Get().scene.miscRefs[i+1].GetComponent<SpriteRenderer>().sprite = pinSymbolGrape;
+                        break;
+                    case 1:
+                        GM.Get().scene.miscRefs[i + 1].GetComponent<SpriteRenderer>().sprite = pinSymbolBell;
+                        break;
+                    case 2:
+                        GM.Get().scene.miscRefs[i + 1].GetComponent<SpriteRenderer>().sprite = pinSymbolCherry;
+                        break;
+                    case 3:
+                        GM.Get().scene.miscRefs[i + 1].GetComponent<SpriteRenderer>().sprite = pinSymbolSeven;
+                        break;
+                    case 4:
+                        GM.Get().scene.miscRefs[i + 1].GetComponent<SpriteRenderer>().sprite = pinSymbolDimond;
+                        break;
+                    case 5:
+                        GM.Get().scene.miscRefs[i + 1].GetComponent<SpriteRenderer>().sprite = pinSymbolClover;
+                        break;
+                }
+            }
+
+            leverAnimator.SetBool("LeverPulled", false); //makes the lever go up
+            soundLeverDown.Play(); // plays a lever sound
+            leverMode = !leverMode;
+
+            //Starting minigame
+            if ((results[0] == 4 && results[1] == 4 && results[2] == 4) || (results[0] != results[1] && results[0] != results[2] && results[1] != results[2]))
+            { callMiniGame(MiniGames.something); }
+            
             yield return null;
         }
 
@@ -359,8 +412,6 @@ namespace Meshadieme
                                     break;
                                 case 2:
                                     stopOtherPinC();
-                                    leverAnimator.SetBool("LeverPulled", false); //makes the lever go up
-                                    soundLeverUp.Play(); // plays a lever sound
                                     break;
                             }
                             
