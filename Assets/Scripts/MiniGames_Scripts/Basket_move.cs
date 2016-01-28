@@ -3,6 +3,8 @@ using System.Collections;
 
 public class Basket_move : MonoBehaviour {
 
+    public int scoreValue;
+    private GameController gameController;
     float MoveSpeed = 0.2f; //If you set it to public it will show in the unity GUI
 
     
@@ -12,8 +14,17 @@ public class Basket_move : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        
+        GameObject GameControllerObject = GameObject.FindWithTag("GameController");
+        if (GameControllerObject != null)
+        {
+            gameController = GameControllerObject.GetComponent<GameController>();
+        }
 
+        if (gameController == null)
+        {
+
+            Debug.Log("Cannot find 'GameController' script");
+        }
 	}
 
 	// Update is called once per frame
@@ -49,6 +60,8 @@ public class Basket_move : MonoBehaviour {
         {
 
             Destroy(col.gameObject);
+
+            gameController.AddScore(scoreValue);
 
         }
     }
