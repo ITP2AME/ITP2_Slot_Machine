@@ -30,4 +30,13 @@ public class GameController : MonoBehaviour {
         Score += NewScoreValue;
         UpdateScore();
     }
+
+    public void SubtractScore(int NewScoreValue)
+    {
+        if (Score > 0)
+        {
+            Score -= NewScoreValue;
+            UpdateScore();
+        }
+    }
 }

@@ -16,7 +16,10 @@ public class Spikes_Behaviour : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D col)
     {
 
-        if (col.gameObject.tag == "Fruit")
+        if (col.gameObject.tag == "Cherry" ||
+           col.gameObject.tag == "Lemon"   ||
+           col.gameObject.tag == "Orange"  ||
+           col.gameObject.tag == "Banana")
         {
 
             Destroy(col.gameObject);

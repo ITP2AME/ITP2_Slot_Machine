@@ -7,17 +7,17 @@ public class ICON_Selector : MonoBehaviour {
     public Sprite Lemon_ICON;
     public Sprite Orange_ICON;
     public Sprite Banana_ICON;
+    private int FruitIndex;
 
     Sprite CurrentFruit;
     Sprite OtherFruit;
 
-    float timer = 5f;
-    float delay = 5f;
+    float timer = 10f;
+    float delay = 10f;
 
     void Start() {
 
         RandomGenerator();
-        RandomGenerator2();
         this.gameObject.GetComponent<SpriteRenderer>().sprite = CurrentFruit;
 
     }
@@ -28,25 +28,16 @@ public class ICON_Selector : MonoBehaviour {
         if (timer <= 0) {
 
             RandomGenerator();
-            RandomGenerator2();
-
-            if (this.gameObject.GetComponent<SpriteRenderer>().sprite == CurrentFruit)
-            {
-                this.gameObject.GetComponent<SpriteRenderer>().sprite = OtherFruit;
-                timer = delay;
-                return;
-            }
-
-            if (this.gameObject.GetComponent<SpriteRenderer>().sprite == OtherFruit)
-            {
-                this.gameObject.GetComponent<SpriteRenderer>().sprite = CurrentFruit;
-                timer = delay;
-                return;
-            }
-
-
+            this.gameObject.GetComponent<SpriteRenderer>().sprite = CurrentFruit;
+            timer = delay;
         }
 
+    }
+
+    public int GetCurrentFruit()
+    {
+
+        return FruitIndex;
     }
 
 
@@ -54,6 +45,7 @@ public class ICON_Selector : MonoBehaviour {
     {
 
         int randomInt = Random.Range(0, 4);
+        FruitIndex = randomInt;
 
         if (randomInt == 1) { CurrentFruit = Lemon_ICON; }
         else if (randomInt == 2) { CurrentFruit = Cherry_ICON; }
@@ -61,14 +53,5 @@ public class ICON_Selector : MonoBehaviour {
         else { CurrentFruit = Banana_ICON; }
     }
 
-    void RandomGenerator2()
-    {
-
-        int randomInt = Random.Range(0, 4);
-
-        if (randomInt == 1) { OtherFruit = Lemon_ICON; }
-        else if (randomInt == 2) { OtherFruit = Cherry_ICON; }
-        else if (randomInt == 3) { OtherFruit = Orange_ICON; }
-        else { OtherFruit = Banana_ICON; }
-    }
+  
 }

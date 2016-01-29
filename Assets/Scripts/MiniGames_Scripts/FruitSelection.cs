@@ -24,10 +24,7 @@ public class FruitSelection : MonoBehaviour {
         //Instantiate(Lemon, new Vector3(-30, 3, 0), Quaternion.identity);
         //Instantiate(Orange, new Vector3(-30, 3, 0), Quaternion.identity);
         //Instantiate(Banana, new Vector3(-30, 3, 0), Quaternion.identity);
-
-        
-
-        
+ 
 
     }
 	
