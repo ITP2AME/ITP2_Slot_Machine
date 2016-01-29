@@ -89,6 +89,7 @@ namespace Meshadieme
         AudioSource soundLeverDown;
         AudioSource soundLeverRight;
 
+
         Sprite[] pinSymbols;
         public Sprite pinSymbolGrape;
         public Sprite pinSymbolBell;
@@ -97,8 +98,13 @@ namespace Meshadieme
         public Sprite pinSymbolCherry;
         public Sprite pinSymbolClover;
 
+        bool[] pinIsSpinning;
+        AudioSource[] pin1Audio; //a reference to the pin audio is declared
+        AudioSource[] pin2Audio; //a reference to the pin audio is declared
+        AudioSource[] pin3Audio; //a reference to the pin audio is declared
+        AudioSource[][] allPinAudio; //a reference to the pin audio is declared
 
-        bool spinning, otherSpinA, otherSpinB, otherSpinC = false;
+        bool otherSpinA, otherSpinB, otherSpinC = false;
         int[] multiStored = new int[] { 1, 0, 0 };
         int[] defShuffle = new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 };
         int[] shuffleA = new int[] { 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0};
@@ -143,7 +149,15 @@ namespace Meshadieme
             pinSymbols[4] = pinSymbolCherry;
             pinSymbols[5] = pinSymbolClover;
 
-        result = new float[2];
+            pinIsSpinning = new bool [4];
+            allPinAudio = new AudioSource[4][];
+            allPinAudio[1] = GM.Get().scene.miscRefs[1].GetComponents<AudioSource>();
+            allPinAudio[2] = GM.Get().scene.miscRefs[2].GetComponents<AudioSource>();
+            allPinAudio[3] = GM.Get().scene.miscRefs[3].GetComponents<AudioSource>();
+
+
+
+            result = new float[2];
             sbDef = new shuffleBag(10, defShuffle); //Scale is the number of times the shuffle bag stores multiple copies of the ratio before resetting (essentially maximimum times the best results should repeat kind of)
             sbTempA = new shuffleBag(10, shuffleA);
             sbTempB = new shuffleBag(10, shuffleB);
@@ -170,20 +184,32 @@ namespace Meshadieme
         {
             Debug.Log("SpinPins");
             StartCoroutine(stopPins());
-            spinning = true;
 
-            int randomSymbol = 0;
-            int tempRandomymbol = 0;
-            int pinNumber =1;
-            while (spinning)
+
+
+            //while spinning the symbol of the three pins change randomly at a certain speed. No symbol is shown multiple times in a row on the same pin (to prevent it looking like the pin is stuck)
+            for (int pinN = 1; pinN < 4; pinN++)
+                pinIsSpinning[pinN] = true;
+            int randomSymbol = 0; //variable refering to pin symbols
+            int tempRandomymbol = 0; //variable storing last symbol showed onpin
+            int pinNumber =1; //variable storing which pin is affected
+            while (pinIsSpinning[1] == true || pinIsSpinning[2] == true || pinIsSpinning[3] == true)
             {
                 for (;pinNumber<=3;pinNumber++)
                 {
-                    randomSymbol = Random.Range(0, 6);
-                    while (randomSymbol == tempRandomymbol)
+                    if (pinIsSpinning[pinNumber] == true)
+                    {
                         randomSymbol = Random.Range(0, 6);
-                    tempRandomymbol = randomSymbol;
-                    GM.Get().scene.miscRefs[pinNumber].GetComponent<SpriteRenderer>().sprite = pinSymbols[randomSymbol];
+                        while (randomSymbol == tempRandomymbol)
+                            randomSymbol = Random.Range(0, 6);
+                        tempRandomymbol = randomSymbol;
+                        GM.Get().scene.miscRefs[pinNumber].GetComponent<SpriteRenderer>().sprite = pinSymbols[randomSymbol];
+
+                        //play audio of spinning pins if not already playing
+                        if (allPinAudio[pinNumber][0].isPlaying == false)
+                            allPinAudio[pinNumber][0].Play();
+                    }
+
                 }
                 pinNumber = 1;
                 yield return new WaitForSeconds(0.05f);
@@ -199,7 +225,6 @@ namespace Meshadieme
             otherSpinB = false;
             otherSpinC = false;
             yield return new WaitForSeconds(0.5f);
-            spinning = false;
             for (int i = 0; i < 3; i++)
             {
                 switch (results[i+3])
@@ -221,36 +246,44 @@ namespace Meshadieme
             }
             Debug.Log("The Results are PinA = " + results[0] + " / PinB = " + results[1] + " / PinC = " + results[2]);
 
-            for(int i = 0; i<3; i++)
-            {
-                switch (results[i])
-                {
-                    case 0:
-                        GM.Get().scene.miscRefs[i+1].GetComponent<SpriteRenderer>().sprite = pinSymbolGrape;
-                        break;
-                    case 1:
-                        GM.Get().scene.miscRefs[i + 1].GetComponent<SpriteRenderer>().sprite = pinSymbolBell;
-                        break;
-                    case 2:
-                        GM.Get().scene.miscRefs[i + 1].GetComponent<SpriteRenderer>().sprite = pinSymbolCherry;
-                        break;
-                    case 3:
-                        GM.Get().scene.miscRefs[i + 1].GetComponent<SpriteRenderer>().sprite = pinSymbolSeven;
-                        break;
-                    case 4:
-                        GM.Get().scene.miscRefs[i + 1].GetComponent<SpriteRenderer>().sprite = pinSymbolDimond;
-                        break;
-                    case 5:
-                        GM.Get().scene.miscRefs[i + 1].GetComponent<SpriteRenderer>().sprite = pinSymbolClover;
-                        break;
-                }
-            }
-
             leverAnimator.SetBool("LeverPulled", false); //makes the lever go up
             soundLeverDown.Play(); // plays a lever sound
+
+            for (int i = 1; i<4; i++)
+            {
+                
+                pinIsSpinning[i] = false;
+                allPinAudio[i][0].Stop();
+                allPinAudio[i][1].Play();
+                switch (results[i-1])
+                {
+                    case 0:
+                        GM.Get().scene.miscRefs[i].GetComponent<SpriteRenderer>().sprite = pinSymbolGrape;
+                        break;
+                    case 1:
+                        GM.Get().scene.miscRefs[i].GetComponent<SpriteRenderer>().sprite = pinSymbolBell;
+                        break;
+                    case 2:
+                        GM.Get().scene.miscRefs[i].GetComponent<SpriteRenderer>().sprite = pinSymbolCherry;
+                        break;
+                    case 3:
+                        GM.Get().scene.miscRefs[i].GetComponent<SpriteRenderer>().sprite = pinSymbolSeven;
+                        break;
+                    case 4:
+                        GM.Get().scene.miscRefs[i].GetComponent<SpriteRenderer>().sprite = pinSymbolDimond;
+                        break;
+                    case 5:
+                        GM.Get().scene.miscRefs[i].GetComponent<SpriteRenderer>().sprite = pinSymbolClover;
+                        break;
+                }
+                yield return new WaitForSeconds(1.0f);
+            }
+
+            
             leverMode = !leverMode;
 
             //Starting minigame
+            yield return new WaitForSeconds(1);
             if ((results[0] == 4 && results[1] == 4 && results[2] == 4) || (results[0] != results[1] && results[0] != results[2] && results[1] != results[2]))
             { callMiniGame(MiniGames.something); }
             
