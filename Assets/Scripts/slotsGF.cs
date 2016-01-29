@@ -82,6 +82,7 @@ namespace Meshadieme
         Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet;
         Button coinButton;
 
+        //variable for controlling the lever
         public bool leverMode;
         public GameObject leverGameObject; //a reference to the lever game object is declared
         public Animator leverAnimator; //An animator controlling the lever is declared
@@ -89,7 +90,7 @@ namespace Meshadieme
         AudioSource soundLeverDown;
         AudioSource soundLeverRight;
 
-
+        //variable for controlling the pins
         Sprite[] pinSymbols;
         public Sprite pinSymbolGrape;
         public Sprite pinSymbolBell;
@@ -99,10 +100,13 @@ namespace Meshadieme
         public Sprite pinSymbolClover;
 
         bool[] pinIsSpinning;
-        AudioSource[] pin1Audio; //a reference to the pin audio is declared
-        AudioSource[] pin2Audio; //a reference to the pin audio is declared
-        AudioSource[] pin3Audio; //a reference to the pin audio is declared
-        AudioSource[][] allPinAudio; //a reference to the pin audio is declared
+        AudioSource[] pin1Audio; 
+        AudioSource[] pin2Audio; 
+        AudioSource[] pin3Audio; 
+        AudioSource[][] allPinAudio;
+
+        GameObject miniGameText;
+        GameObject miniGamePopUp;
 
         bool otherSpinA, otherSpinB, otherSpinC = false;
         int[] multiStored = new int[] { 1, 0, 0 };
@@ -134,6 +138,8 @@ namespace Meshadieme
             toBet = GM.Get().scene.miscRefs[8].GetComponent<Text>();
             gMode = 0;
 
+
+            //lever variables are innitalized
             leverMode = true;
             leverGameObject = GameObject.FindGameObjectWithTag("lever"); //Accessing the lever game object
             leverAnimator = leverGameObject.GetComponent<Animator>(); //Accessing the animator componenet on the lever object
@@ -141,6 +147,7 @@ namespace Meshadieme
             soundLeverDown = leverAudio[0]; //references to specific audio sources
             soundLeverRight = leverAudio[1];
 
+            //pin variables are initialized
             pinSymbols = new Sprite[6];
             pinSymbols[0] = pinSymbolGrape;
             pinSymbols[1] = pinSymbolBell;
@@ -155,6 +162,13 @@ namespace Meshadieme
             allPinAudio[2] = GM.Get().scene.miscRefs[2].GetComponents<AudioSource>();
             allPinAudio[3] = GM.Get().scene.miscRefs[3].GetComponents<AudioSource>();
 
+            miniGameText = GameObject.FindGameObjectWithTag("miniGameText");
+            miniGamePopUp = GameObject.FindGameObjectWithTag("miniGamePopUp");
+
+
+
+            changeColor("greenLightbulp", true);
+            changeColor("redLightbulp", false);
 
 
             result = new float[2];
@@ -162,6 +176,51 @@ namespace Meshadieme
             sbTempA = new shuffleBag(10, shuffleA);
             sbTempB = new shuffleBag(10, shuffleB);
             sbTempC = new shuffleBag(10, shuffleC);
+
+        }
+
+        //function responsible for changing the light Bulbs color
+        void changeColor(string whichObject, bool TrueOnFalseOff)
+        {
+            //local variable for controlling the lightbulps
+            GameObject[] lightbulps;
+            GameObject greenLightBulp;
+            GameObject redLightBulp;
+            SpriteRenderer greenLightBulpRenderer;
+            SpriteRenderer redLightBulpRenderer;
+
+            lightbulps = GameObject.FindGameObjectsWithTag("lightBulp");
+            greenLightBulp = lightbulps[0];
+            redLightBulp = lightbulps[1];
+
+            Color greenLightBulpOn = new Color(0f, 255/255f, 56/255f, 1f);
+            Color greenLightBulpOff = new Color(133/255f, 154/255f, 141/255f, 1f);
+            Color redLightBulpOn = new Color(255/255f, 0f, 0f, 1f);
+            Color redLightBulpOff = new Color(162/255f, 107/255f, 107/255f, 1f);
+
+
+            if (whichObject == "greenLightbulp" && TrueOnFalseOff == true)
+            {
+                greenLightBulpRenderer = greenLightBulp.GetComponent<SpriteRenderer>();
+                greenLightBulpRenderer.color = greenLightBulpOn;
+            }
+            else if (whichObject == "greenLightbulp" && TrueOnFalseOff == false)
+            {
+                greenLightBulpRenderer = greenLightBulp.GetComponent<SpriteRenderer>();
+                greenLightBulpRenderer.color = greenLightBulpOff;
+            }
+
+            if (whichObject == "redLightbulp" && TrueOnFalseOff == true)
+            {
+                redLightBulpRenderer = redLightBulp.GetComponent<SpriteRenderer>();
+                redLightBulpRenderer.color = redLightBulpOn;
+            }
+            else if (whichObject == "redLightbulp" && TrueOnFalseOff == false)
+            {
+                redLightBulpRenderer = redLightBulp.GetComponent<SpriteRenderer>();
+                redLightBulpRenderer.color = redLightBulpOff;
+            }
+
         }
         
         public void loadSelectedGame()
@@ -169,7 +228,7 @@ namespace Meshadieme
             Debug.Log("GM.framework Loading");
             initSlots();
             //callMiniGame(MiniGames.something);
-
+            miniGamePopUp.SetActive(false);
         }
 
         void updateMulti()
@@ -281,11 +340,21 @@ namespace Meshadieme
 
             
             leverMode = !leverMode;
+            changeColor("greenLightbulp", true);
+            changeColor("redLightbulp", false);
 
             //Starting minigame
-            yield return new WaitForSeconds(1);
-            if ((results[0] == 4 && results[1] == 4 && results[2] == 4) || (results[0] != results[1] && results[0] != results[2] && results[1] != results[2]))
-            { callMiniGame(MiniGames.something); }
+            
+            if ((results[0] == 4 && results[1] == 4 && results[2] == 4) || (results[0] != results[1] && results[0] != results[2] && results[1] != results[2])) //|| (results[0] != results[1] && results[0] != results[2] && results[1] != results[2])
+            {
+                yield return new WaitForSeconds(1);
+                miniGamePopUp.SetActive(true);
+                miniGameText.GetComponent<Text>().text = "Mini Game Name Goes Here" ;
+                yield return new WaitForSeconds(5);
+                miniGamePopUp.SetActive(false);
+                callMiniGame(MiniGames.something);
+
+            }
             
             yield return null;
         }
@@ -410,11 +479,13 @@ namespace Meshadieme
         {
             switch (buttonIndex)
             {
-                case 0: //Lever Left Click (level goes up / down)
+                case 0: 
                     if (leverMode)
                     {//First Pull
                         leverAnimator.SetBool("LeverPulled", true); //makes the lever go down
                         soundLeverDown.Play(); // plays a lever sound
+                        changeColor("greenLightbulp", false);
+                        changeColor("redLightbulp", true);
                         Debug.Log("Lever Down");
                         leverMode = !leverMode;
                         StartCoroutine(spinPins());
@@ -428,7 +499,7 @@ namespace Meshadieme
                         toUse = sbDef;
                     }
                     else
-                    {//Second - Fourth Side Pull
+                    {//Second to Fourth Side Pull
                         
                         if (otherPinState < 3)
                         {
