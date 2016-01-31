@@ -4,19 +4,26 @@ using System.Collections;
 public class GameController : MonoBehaviour {
 
     public GUIText scoreText;
+    public GUIText timeText;
+
     private int Score;
+    float timeRemaining = 60;
 
     // Use this for initialization
     void Start () {
 
         Score = 0;
         UpdateScore();
+       
+
     }
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
+
+        timeRemaining -= Time.deltaTime;
+        UpdateTime();
+    }
 
     void UpdateScore()
     {
@@ -37,6 +44,15 @@ public class GameController : MonoBehaviour {
         {
             Score -= NewScoreValue;
             UpdateScore();
+        }
+    }
+
+
+    void UpdateTime()
+    {
+        if (timeRemaining > 0) { timeText.text = "Time: " + (int)timeRemaining; }
+        else { timeText.text = "Time's up! ";
+            //Add Exit Game code.
         }
     }
 }

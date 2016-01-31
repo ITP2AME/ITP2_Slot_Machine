@@ -8,7 +8,7 @@ public class Basket_move : MonoBehaviour {
     public int SubValue;
     private GameController gameController;
     private ICON_Selector IconType;
-    float MoveSpeed = 600.0f; //If you set it to public it will show in the unity GUI
+    float MoveSpeed = 0.2f; //If you set it to public it will show in the unity GUI
     private Rigidbody2D rb;
     
     
@@ -62,29 +62,18 @@ public class Basket_move : MonoBehaviour {
         //{
             if (Input.GetKey(KeyCode.RightArrow))
             {
-            //this.transform.Translate(MoveSpeed, 0, 0);
-            rb.drag = 0;
-            rb.AddForce(new Vector2(MoveSpeed, 0));
-                
-            }
+            this.transform.Translate(MoveSpeed, 0, 0);
+           
 
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-            //this.transform.Translate(-MoveSpeed, 0, 0);
-            rb.drag = 0;
-            rb.AddForce(new Vector2(-MoveSpeed, 0));
-                
-            }
-        //}
-
-        if (Input.GetKeyUp(KeyCode.RightArrow) ||
-            Input.GetKeyUp(KeyCode.LeftArrow))
-        {
-            rb.drag = 1000;
         }
 
-        float clampedx = Mathf.Clamp(rb.velocity.x, -MoveSpeed, MoveSpeed);
-        rb.velocity = new Vector2(clampedx, rb.velocity.y);
+        if (Input.GetKey(KeyCode.LeftArrow))
+            {
+            this.transform.Translate(-MoveSpeed, 0, 0);
+           
+
+        }
+      
 
     }
 
@@ -112,22 +101,6 @@ public class Basket_move : MonoBehaviour {
         }
 
     }
-
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        /*Debug.Log("collided with wall");
-        collided = true;
-        this.transform.Translate(-0.5f, 0, 0);*/
-        
-
-    }
-
-    /*void OnTriggerExit2D(Collider2D col)
-    {
-        Debug.Log("collided with wall");
-        collided = false;
-
-    }*/
 
 
 }

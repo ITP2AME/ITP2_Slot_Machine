@@ -31,7 +31,7 @@ public class Cherries_Generator : MonoBehaviour {
 
     void Create_Fruits() {
 
-        for (int x = -4; x < 6; x += 2)
+        for (int x = -6; x < 8; x += 2)
         {
 
             RandomGenerator();
