@@ -7,11 +7,17 @@ public class GameController : MonoBehaviour {
     public GUIText timeText;
 
     private int Score;
-    float timeRemaining = 60;
+    public float timeRemaining;
+
+    public GameObject CherryPrefab;
+    public GameObject LemonPrefab;
+    public GameObject OrangePrefab;
+    public GameObject BananaPrefab;
 
     // Use this for initialization
     void Start () {
 
+        timeRemaining = 60;
         Score = 0;
         UpdateScore();
        
@@ -23,6 +29,9 @@ public class GameController : MonoBehaviour {
 
         timeRemaining -= Time.deltaTime;
         UpdateTime();
+        UpdateDifficulty();
+
+
     }
 
     void UpdateScore()
@@ -54,5 +63,27 @@ public class GameController : MonoBehaviour {
         else { timeText.text = "Time's up! ";
             //Add Exit Game code.
         }
+    }
+
+    void UpdateDifficulty()
+    {
+        //Increasing Gravity when 30 seconds are left
+        if (timeRemaining < 30)
+        {
+            CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
+            LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
+            OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
+            BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
+        }
+
+        //Further increasing gravity when 10 seconds are left
+        if (timeRemaining <= 10)
+        {
+            CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+            LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+            OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+            BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+        }
+
     }
 }

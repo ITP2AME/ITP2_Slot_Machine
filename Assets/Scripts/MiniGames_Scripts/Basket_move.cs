@@ -10,12 +10,17 @@ public class Basket_move : MonoBehaviour {
     private ICON_Selector IconType;
     float MoveSpeed = 0.2f; //If you set it to public it will show in the unity GUI
     private Rigidbody2D rb;
-    
-    
+
+    public AudioSource Good_fruit;
+    public AudioSource Bad_fruit;
+
+
+
 
 
     // Use this for initialization
     void Start () {
+
 
         rb = GetComponent<Rigidbody2D>();
 
@@ -94,10 +99,12 @@ public class Basket_move : MonoBehaviour {
                 (IconType.GetCurrentFruit() == 3 && col.gameObject.tag == "Orange") ||
                 (IconType.GetCurrentFruit() == 0 && col.gameObject.tag == "Banana"))
             {
+
+                Good_fruit.Play();
                 gameController.AddScore(AddValue);
             }
 
-            else { gameController.SubtractScore(SubValue); }
+            else { gameController.SubtractScore(SubValue); Bad_fruit.Play(); }
         }
 
     }

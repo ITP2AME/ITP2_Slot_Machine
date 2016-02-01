@@ -3,20 +3,29 @@ using System.Collections;
 
 public class Cherries_Generator : MonoBehaviour {
 
-    public Transform Cherry;
-    public Transform Lemon;
-    public Transform Orange;
-    public Transform Banana;
+    public GameObject Cherry;
+    public GameObject Lemon;
+    public GameObject Orange;
+    public GameObject Banana;
 
-    Transform CurrentFruit;
+    GameObject CurrentFruit;
 
+    public GameController gameController;
 
+    float rateSpawn;
 
     // Use this for initialization
     void Start () {
 
+        Cherry.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+        Lemon.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+        Orange.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+        Banana.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
 
-        InvokeRepeating("Create_Fruits", 0, 3);
+
+        rateSpawn = 3.0f;
+
+        StartCoroutine(SpawnStuff());
 
 
     }
@@ -24,9 +33,26 @@ public class Cherries_Generator : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        
+        if (gameController.timeRemaining < 30 && gameController.timeRemaining > 10)
+        {
+            rateSpawn = 2.0f;
+        }
+
+        if (gameController.timeRemaining <= 10)
+        {
+            rateSpawn = 1.0f;
+        }
+
+    }
 
 
+    IEnumerator SpawnStuff()
+    {
+        while (true)
+        {
+            Create_Fruits();
+            yield return new WaitForSeconds(rateSpawn);
+        }
     }
 
     void Create_Fruits() {

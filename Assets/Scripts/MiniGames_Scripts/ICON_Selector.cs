@@ -10,7 +10,7 @@ public class ICON_Selector : MonoBehaviour {
     private int FruitIndex;
 
     Sprite CurrentFruit;
-    Sprite OtherFruit;
+
 
     float timer = 10f;
     float delay = 10f;
