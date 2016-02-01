@@ -63,22 +63,22 @@ public class Basket_move : MonoBehaviour {
 
     void HandleMovement()
     {
-        //if (collided == false)
-        //{
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
+
+
+       
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
             this.transform.Translate(MoveSpeed, 0, 0);
-           
+
 
         }
 
         if (Input.GetKey(KeyCode.LeftArrow))
-            {
+        {
             this.transform.Translate(-MoveSpeed, 0, 0);
-           
+
 
         }
-      
 
     }
 
