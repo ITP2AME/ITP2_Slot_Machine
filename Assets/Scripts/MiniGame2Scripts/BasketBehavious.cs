@@ -11,8 +11,8 @@ public class BasketBehavious : MonoBehaviour {
     float MoveSpeed = 0.2f; //If you set it to public it will show in the unity GUI
     private Rigidbody2D rb;
 
-    //public AudioSource Good_fruit;
-    //public AudioSource Bad_fruit;
+    public AudioSource Good_fruit;
+    public AudioSource Bad_fruit;
 
 
 
@@ -88,11 +88,11 @@ public class BasketBehavious : MonoBehaviour {
                 (IconType.GetCurrentFruit() == 0 && col.gameObject.tag == "Banana"))
             {
 
-                //Good_fruit.Play();
+                Good_fruit.Play();
                 gameController.AddScore(AddValue);
             }
 
-            else { gameController.SubtractScore(SubValue); /*Bad_fruit.Play();*/ }
+            else { gameController.SubtractScore(SubValue); Bad_fruit.Play(); }
         }
 
     }
