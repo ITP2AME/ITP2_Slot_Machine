@@ -3,10 +3,15 @@ using System.Collections;
 
 public class Fruit_Move : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
+    public Rigidbody2D rb;
+    float thrust = 50f;
+
+    // Use this for initialization
+    void Start () {
+
+        rb = this.GetComponent<Rigidbody2D>();
+
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -22,7 +27,11 @@ public class Fruit_Move : MonoBehaviour {
     {
         // this object was clicked - do something
 
-        this.transform.Translate(1.0f, 1.0f, 0);
+        //rb.transform.Translate(1.0f, 1.0f, 0);
+
+        rb.AddForce(transform.right * thrust);
+        rb.AddForce(transform.up * thrust);
+
         //Destroy(this.gameObject);
     }
 }

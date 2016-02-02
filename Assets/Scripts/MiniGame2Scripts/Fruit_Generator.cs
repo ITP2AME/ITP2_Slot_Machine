@@ -18,13 +18,13 @@ public class Fruit_Generator : MonoBehaviour {
     void Start()
     {
 
-        Cherry.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
-        Lemon.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
-        Orange.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
-        Banana.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+        Cherry.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
+        Lemon.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
+        Orange.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
+        Banana.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
 
 
-        rateSpawn = 3.0f;
+        rateSpawn = 5.0f;
 
         StartCoroutine(SpawnStuff());
 
@@ -37,12 +37,12 @@ public class Fruit_Generator : MonoBehaviour {
 
         if (gameController.timeRemaining < 30 && gameController.timeRemaining > 10)
         {
-            rateSpawn = 2.0f;
+            rateSpawn = 4.0f;
         }
 
         if (gameController.timeRemaining <= 10)
         {
-            rateSpawn = 1.0f;
+            rateSpawn = 3.0f;
         }
 
     }
