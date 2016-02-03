@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameController : MonoBehaviour {
+public class GameController_3 : MonoBehaviour {
 
     public GUIText scoreText;
     public GUIText timeText;
@@ -9,29 +9,34 @@ public class GameController : MonoBehaviour {
     private int Score;
     public float timeRemaining;
 
+    public AudioSource Good_Fruit;
+    public AudioSource Bad_Fruit;
+
     public GameObject CherryPrefab;
     public GameObject LemonPrefab;
     public GameObject OrangePrefab;
     public GameObject BananaPrefab;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
         //probably not needed here
-        CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
-        LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
-        OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
-        BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+        CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
+        LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
+        OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
+        BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
 
-        timeRemaining = 120;
+        timeRemaining = 60;
         Score = 0;
         UpdateScore();
-       
+
 
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    void Update()
+    {
 
         timeRemaining -= Time.deltaTime;
         UpdateTime();
@@ -51,15 +56,17 @@ public class GameController : MonoBehaviour {
 
     public void AddScore(int NewScoreValue)
     {
+        Good_Fruit.Play();
         if (timeRemaining > 30) { Score += NewScoreValue; }
-        if (timeRemaining <= 30 && timeRemaining> 10) { Score += NewScoreValue*2; }
-        if (timeRemaining <= 10) { Score += NewScoreValue*3; }
+        if (timeRemaining <= 30 && timeRemaining > 10) { Score += NewScoreValue * 2; }
+        if (timeRemaining <= 10) { Score += NewScoreValue * 3; }
 
         UpdateScore();
     }
 
     public void SubtractScore(int NewScoreValue)
     {
+        Bad_Fruit.Play();
         if (Score > 0)
         {
             if (timeRemaining > 30) { Score -= NewScoreValue; }
@@ -74,7 +81,9 @@ public class GameController : MonoBehaviour {
     void UpdateTime()
     {
         if (timeRemaining > 0) { timeText.text = "Time: " + (int)timeRemaining; }
-        else { timeText.text = "Time's up! ";
+        else
+        {
+            timeText.text = "Time's up! ";
             //Add Exit Game code.
         }
     }
@@ -84,20 +93,21 @@ public class GameController : MonoBehaviour {
         //Increasing Gravity when 30 seconds are left
         if (timeRemaining < 30)
         {
-            CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
-            LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
-            OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
-            BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
+            CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+            LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+            OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+            BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
         }
 
         //Further increasing gravity when 10 seconds are left
         if (timeRemaining <= 10)
         {
-            CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
-            LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
-            OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
-            BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
+            CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
+            LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
+            OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
+            BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
         }
 
     }
 }
+

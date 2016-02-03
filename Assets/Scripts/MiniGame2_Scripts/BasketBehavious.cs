@@ -33,7 +33,7 @@ public class BasketBehavious : MonoBehaviour {
         if (gameController == null)
         {
 
-            Debug.Log("Cannot find 'GameController' script");
+            Debug.Log("Cannot find 'GameController 2' script");
         }
 
 
@@ -71,7 +71,7 @@ public class BasketBehavious : MonoBehaviour {
 
             Destroy(col.gameObject);
 
-            if (((this.gameObject.tag == "Basket_Lemon"  || this.gameObject.tag == "Basket")   && col.gameObject.tag == "Lemon_2") ||
+            if (((this.gameObject.tag == "Basket_Lemon"  || this.gameObject.tag == "Basket") && col.gameObject.tag == "Lemon_2")  ||
                 ((this.gameObject.tag == "Basket_Cherry" || this.gameObject.tag == "Basket") && col.gameObject.tag == "Cherry_2") ||
                 ((this.gameObject.tag == "Basket_Orange" || this.gameObject.tag == "Basket") && col.gameObject.tag == "Orange_2") ||
                 ((this.gameObject.tag == "Basket_Banana" || this.gameObject.tag == "Basket") && col.gameObject.tag == "Banana_2"))

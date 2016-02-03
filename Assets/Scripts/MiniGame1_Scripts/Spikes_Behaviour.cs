@@ -4,6 +4,7 @@ using System.Collections;
 public class Spikes_Behaviour : MonoBehaviour {
 
     private GameController_2 gameController;
+    
     public int SubValue;
     public AudioSource Fruit_Smash;
 
@@ -21,6 +22,7 @@ public class Spikes_Behaviour : MonoBehaviour {
 
             Debug.Log("Cannot find 'GameController 2' script");
         }
+
 
     }
 	
@@ -43,16 +45,17 @@ public class Spikes_Behaviour : MonoBehaviour {
         }
 
         if (col.gameObject.tag == "Cherry_2" ||
-         col.gameObject.tag == "Lemon_2" ||
-         col.gameObject.tag == "Orange_2" ||
-         col.gameObject.tag == "Banana_2")
+            col.gameObject.tag == "Lemon_2"  ||
+            col.gameObject.tag == "Orange_2" ||
+            col.gameObject.tag == "Banana_2")
         {
 
             Destroy(col.gameObject);
             gameController.SubtractScore(SubValue);
             Fruit_Smash.Play();
 
-
         }
+
+   
     }
 }
