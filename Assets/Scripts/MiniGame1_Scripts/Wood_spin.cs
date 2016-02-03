@@ -11,6 +11,7 @@ public class Wood_spin : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+        //Adds Rotation to the woos panels
         this.transform.Rotate(0, 0, -1.5f);
     }
 }
