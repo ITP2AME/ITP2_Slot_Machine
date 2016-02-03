@@ -9,13 +9,24 @@ public class ICON_Selector : MonoBehaviour {
     public Sprite Banana_ICON;
     private int FruitIndex;
 
+    private GameController gameController;
+
     Sprite CurrentFruit;
 
 
-    float timer = 10f;
-    float delay = 10f;
+    float timer;
+    float delay;
 
     void Start() {
+
+        GameObject GameControllerObject = GameObject.FindWithTag("GameController");
+
+        if (GameControllerObject != null) {gameController = GameControllerObject.GetComponent<GameController>();}
+        if (gameController == null)
+        {Debug.Log("Cannot find 'GameController' script");}
+
+        timer = 10f;
+        delay = 10f;
 
         RandomGenerator();
         this.gameObject.GetComponent<SpriteRenderer>().sprite = CurrentFruit;
@@ -23,6 +34,9 @@ public class ICON_Selector : MonoBehaviour {
     }
 
     void Update() {
+
+        if (gameController.timeRemaining <= 30 && gameController.timeRemaining > 10) { delay = 5; }
+        if (gameController.timeRemaining <= 10) { delay = 3; }
 
         timer -= Time.deltaTime;
         if (timer <= 0) {

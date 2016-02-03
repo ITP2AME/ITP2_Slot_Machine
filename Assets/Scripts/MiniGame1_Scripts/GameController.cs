@@ -50,8 +50,10 @@ public class GameController : MonoBehaviour {
 
     public void AddScore(int NewScoreValue)
     {
+        if (timeRemaining > 30) { Score += NewScoreValue; }
+        if (timeRemaining <= 30 && timeRemaining> 10) { Score += NewScoreValue*2; }
+        if (timeRemaining <= 10) { Score += NewScoreValue*3; }
 
-        Score += NewScoreValue;
         UpdateScore();
     }
 
@@ -59,7 +61,10 @@ public class GameController : MonoBehaviour {
     {
         if (Score > 0)
         {
-            Score -= NewScoreValue;
+            if (timeRemaining > 30) { Score -= NewScoreValue; }
+            if (timeRemaining <= 30 && timeRemaining > 10) { Score -= NewScoreValue * 2; }
+            if (timeRemaining <= 10) { Score -= NewScoreValue * 3; }
+
             UpdateScore();
         }
     }
