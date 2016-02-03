@@ -66,7 +66,8 @@ namespace Meshadieme
 
     public enum MiniGames
     {
-        something,
+        mini1,
+        mini2,
     }
     public class slotsGF : gameFramework {
 
@@ -105,7 +106,7 @@ namespace Meshadieme
 			Debug.Log ("GM.framework Loading");
             //initSlots();
             result = new float[2];
-            callMiniGame(MiniGames.something);
+            callMiniGame(MiniGames.mini1);
 
         }
 
@@ -127,7 +128,16 @@ namespace Meshadieme
         {
             switch (mg)
             {
-                case MiniGames.something:
+                case MiniGames.mini1:
+                    GM.Get().scene.miscRefs[15].SetActive(false);
+                    GM.Get().scene.miscRefs[16].SetActive(true);
+
+                    result[0] = 1.0f;
+                    result[1] = 0.0f;
+                    //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
+                    // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
+                    break;
+                case MiniGames.mini2:
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[16].SetActive(true);
 

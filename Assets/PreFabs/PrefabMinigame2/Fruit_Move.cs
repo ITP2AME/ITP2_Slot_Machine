@@ -4,7 +4,7 @@ using System.Collections;
 public class Fruit_Move : MonoBehaviour {
 
     public Rigidbody2D rb;
-    float thrust = 50f;
+    float thrust = 100f;
 
     // Use this for initialization
     void Start () {
@@ -27,10 +27,17 @@ public class Fruit_Move : MonoBehaviour {
     {
         // this object was clicked - do something
 
-        //rb.transform.Translate(1.0f, 1.0f, 0);
+        if (Input.GetMouseButtonDown(0))
+        {
+            rb.AddForce(transform.right * thrust);
+            rb.AddForce(transform.up * thrust);
+        }
 
-        rb.AddForce(transform.right * thrust);
-        rb.AddForce(transform.up * thrust);
+        //if (Input.GetMouseButtonDown(1))
+        //{
+        //    rb.AddForce(-transform.right * thrust);
+        //    rb.AddForce(-transform.up * thrust);
+        //}
 
         //Destroy(this.gameObject);
     }

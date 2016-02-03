@@ -11,6 +11,6 @@ public class Wood_spin : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        this.transform.Rotate(0, 0, -2);
+        this.transform.Rotate(0, 0, -1.5f);
     }
 }

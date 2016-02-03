@@ -10,7 +10,7 @@ public class Fruit_Generator : MonoBehaviour {
 
     GameObject CurrentFruit;
 
-    public GameController gameController;
+    public GameController_2 gameController;
 
     float rateSpawn;
 
@@ -24,7 +24,7 @@ public class Fruit_Generator : MonoBehaviour {
         Banana.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
 
 
-        rateSpawn = 5.0f;
+        rateSpawn = 6.0f;
 
         StartCoroutine(SpawnStuff());
 
@@ -37,12 +37,12 @@ public class Fruit_Generator : MonoBehaviour {
 
         if (gameController.timeRemaining < 30 && gameController.timeRemaining > 10)
         {
-            rateSpawn = 4.0f;
+            rateSpawn = 5.0f;
         }
 
         if (gameController.timeRemaining <= 10)
         {
-            rateSpawn = 3.0f;
+            rateSpawn = 4.0f;
         }
 
     }

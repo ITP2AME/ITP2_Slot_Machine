@@ -6,7 +6,7 @@ public class BasketBehavious : MonoBehaviour {
     bool collided;
     public int AddValue;
     public int SubValue;
-    private GameController gameController;
+    private GameController_2 gameController;
     private ICON_Selector IconType;
     float MoveSpeed = 0.2f; //If you set it to public it will show in the unity GUI
     private Rigidbody2D rb;
@@ -23,12 +23,11 @@ public class BasketBehavious : MonoBehaviour {
     {
 
 
-        rb = GetComponent<Rigidbody2D>();
 
         GameObject GameControllerObject = GameObject.FindWithTag("GameController");
         if (GameControllerObject != null)
         {
-            gameController = GameControllerObject.GetComponent<GameController>();
+            gameController = GameControllerObject.GetComponent<GameController_2>();
         }
 
         if (gameController == null)
@@ -38,17 +37,7 @@ public class BasketBehavious : MonoBehaviour {
         }
 
 
-        GameObject IconSelectorObject = GameObject.FindWithTag("ICON_Selector");
-        if (IconSelectorObject != null)
-        {
-            IconType = IconSelectorObject.GetComponent<ICON_Selector>();
-        }
-
-        if (IconSelectorObject == null)
-        {
-
-            Debug.Log("Cannot find 'Icon Selector' script");
-        }
+        
 
 
     }
@@ -57,35 +46,35 @@ public class BasketBehavious : MonoBehaviour {
     void Update()
     {
 
-        HandleMovement();
+        //HandleMovement();
 
 
     }
 
 
-    void HandleMovement()
-    {
+    //void HandleMovement()
+    //{
        
 
 
-    }
+    //}
 
     void OnCollisionEnter2D(Collision2D col)
     {
         Debug.Log("Collision Enter");
 
-        if (col.gameObject.tag == "Cherry" ||
-           col.gameObject.tag == "Lemon" ||
-           col.gameObject.tag == "Orange" ||
-           col.gameObject.tag == "Banana")
+        if (col.gameObject.tag == "Cherry_2" ||
+           col.gameObject.tag == "Lemon_2" ||
+           col.gameObject.tag == "Orange_2" ||
+           col.gameObject.tag == "Banana_2")
         {
 
             Destroy(col.gameObject);
 
-            if ((IconType.GetCurrentFruit() == 1 && col.gameObject.tag == "Lemon") ||
-                (IconType.GetCurrentFruit() == 2 && col.gameObject.tag == "Cherry") ||
-                (IconType.GetCurrentFruit() == 3 && col.gameObject.tag == "Orange") ||
-                (IconType.GetCurrentFruit() == 0 && col.gameObject.tag == "Banana"))
+            if (((this.gameObject.tag == "Basket_Lemon"  || this.gameObject.tag == "Basket")   && col.gameObject.tag == "Lemon_2") ||
+                ((this.gameObject.tag == "Basket_Cherry" || this.gameObject.tag == "Basket") && col.gameObject.tag == "Cherry_2") ||
+                ((this.gameObject.tag == "Basket_Orange" || this.gameObject.tag == "Basket") && col.gameObject.tag == "Orange_2") ||
+                ((this.gameObject.tag == "Basket_Banana" || this.gameObject.tag == "Basket") && col.gameObject.tag == "Banana_2"))
             {
 
                 Good_fruit.Play();

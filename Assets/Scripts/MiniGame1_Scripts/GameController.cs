@@ -17,6 +17,11 @@ public class GameController : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
+        CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+        LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+        OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+        BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+
         timeRemaining = 60;
         Score = 0;
         UpdateScore();
@@ -31,6 +36,9 @@ public class GameController : MonoBehaviour {
         UpdateTime();
         UpdateDifficulty();
 
+        if (Score < 0)
+        { Score = 0; }
+        UpdateScore();
 
     }
 
