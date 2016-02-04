@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Meshadieme;
+using UnityEngine;
 using System.Collections;
 
 public class GameController : MonoBehaviour {
@@ -23,7 +24,7 @@ public class GameController : MonoBehaviour {
         OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
         BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
 
-        timeRemaining = 120;
+        timeRemaining = 60;
         Score = 0;
         UpdateScore();
        
@@ -75,7 +76,7 @@ public class GameController : MonoBehaviour {
     {
         if (timeRemaining > 0) { timeText.text = "Time: " + (int)timeRemaining; }
         else { timeText.text = "Time's up! ";
-            //Add Exit Game code.
+            GM.Get().framework.endMiniGame();
         }
     }
 

@@ -66,7 +66,9 @@ namespace Meshadieme
 
     public enum MiniGames
     {
-        something,
+        mini1,
+        mini2,
+        mini3,
     }
 
     public class slotsGF : gameFramework
@@ -176,6 +178,7 @@ namespace Meshadieme
             sbTempA = new shuffleBag(10, shuffleA);
             sbTempB = new shuffleBag(10, shuffleB);
             sbTempC = new shuffleBag(10, shuffleC);
+            //callMiniGame(MiniGames.mini1);
 
         }
 
@@ -344,17 +347,18 @@ namespace Meshadieme
             changeColor("redLightbulp", false);
 
             //Starting minigame
+            //Elio
             
-            if ((results[0] == 4 && results[1] == 4 && results[2] == 4) || (results[0] != results[1] && results[0] != results[2] && results[1] != results[2])) //|| (results[0] != results[1] && results[0] != results[2] && results[1] != results[2])
-            {
+           // if ((results[0] == 4 && results[1] == 4 && results[2] == 4) || (results[0] != results[1] && results[0] != results[2] && results[1] != results[2])) //|| (results[0] != results[1] && results[0] != results[2] && results[1] != results[2])
+            //{
                 yield return new WaitForSeconds(1);
                 miniGamePopUp.SetActive(true);
                 miniGameText.GetComponent<Text>().text = "Mini Game Name Goes Here" ;
                 yield return new WaitForSeconds(5);
                 miniGamePopUp.SetActive(false);
-                callMiniGame(MiniGames.something);
+                callMiniGame(MiniGames.mini1);
 
-            }
+            //}
             
             yield return null;
         }
@@ -429,9 +433,27 @@ namespace Meshadieme
         {
             switch (mg)
             {
-                case MiniGames.something:
+                case MiniGames.mini1:
                     GM.Get().scene.miscRefs[15].SetActive(false);
-                    GM.Get().scene.miscRefs[16].SetActive(true);
+                    GM.Get().scene.miscRefs[10].SetActive(true);
+
+                    result[0] = 1.0f;
+                    result[1] = 0.0f;
+                    //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
+                    // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
+                    break;
+                case MiniGames.mini2:
+                    GM.Get().scene.miscRefs[15].SetActive(false);
+                    GM.Get().scene.miscRefs[11].SetActive(true);
+
+                    result[0] = 1.0f;
+                    result[1] = 0.0f;
+                    //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
+                    // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
+                    break;
+                case MiniGames.mini3:
+                    GM.Get().scene.miscRefs[15].SetActive(false);
+                    GM.Get().scene.miscRefs[12].SetActive(true);
 
                     result[0] = 1.0f;
                     result[1] = 0.0f;
@@ -446,7 +468,9 @@ namespace Meshadieme
         public void endMiniGame()
         {
             GM.Get().scene.miscRefs[15].SetActive(true);
-            GM.Get().scene.miscRefs[16].SetActive(false);
+            GM.Get().scene.miscRefs[10].SetActive(false);
+            GM.Get().scene.miscRefs[11].SetActive(false);
+            GM.Get().scene.miscRefs[12].SetActive(false);
             switch ((int) result[0])
             {
                 case 2:
