@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Deals with the behaviour of the baskets in minigame 2
 public class BasketBehavious : MonoBehaviour {
 
+    //Declaration of variables and other useful objects
     bool collided;
     public int AddValue;
     public int SubValue;
@@ -16,29 +18,13 @@ public class BasketBehavious : MonoBehaviour {
 
 
 
-
-
     // Use this for initialization
     void Start()
     {
 
-
-
         GameObject GameControllerObject = GameObject.FindWithTag("GameController");
-        if (GameControllerObject != null)
-        {
-            gameController = GameControllerObject.GetComponent<GameController_2>();
-        }
-
-        if (gameController == null)
-        {
-
-            Debug.Log("Cannot find 'GameController 2' script");
-        }
-
-
-        
-
+        if (GameControllerObject != null){ gameController = GameControllerObject.GetComponent<GameController_2>();}
+        if (gameController == null){ Debug.Log("Cannot find 'GameController 2' script");}
 
     }
 
@@ -46,23 +32,12 @@ public class BasketBehavious : MonoBehaviour {
     void Update()
     {
 
-        //HandleMovement();
-
 
     }
 
-
-    //void HandleMovement()
-    //{
-       
-
-
-    //}
-
+    //Detects collisions and triggers the correct events in game
     void OnCollisionEnter2D(Collision2D col)
-    {
-        Debug.Log("Collision Enter");
-
+    {   //Destroyes any fruit hitting any basket
         if (col.gameObject.tag == "Cherry_2" ||
            col.gameObject.tag == "Lemon_2" ||
            col.gameObject.tag == "Orange_2" ||
@@ -71,6 +46,7 @@ public class BasketBehavious : MonoBehaviour {
 
             Destroy(col.gameObject);
 
+            //If the right fruit hits the correct basket add score
             if (((this.gameObject.tag == "Basket_Lemon"  || this.gameObject.tag == "Basket") && col.gameObject.tag == "Lemon_2")  ||
                 ((this.gameObject.tag == "Basket_Cherry" || this.gameObject.tag == "Basket") && col.gameObject.tag == "Cherry_2") ||
                 ((this.gameObject.tag == "Basket_Orange" || this.gameObject.tag == "Basket") && col.gameObject.tag == "Orange_2") ||
@@ -81,6 +57,7 @@ public class BasketBehavious : MonoBehaviour {
                 gameController.AddScore(AddValue);
             }
 
+            //Else subtract the score
             else { gameController.SubtractScore(SubValue); Bad_fruit.Play(); }
         }
 

@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Deals with interation with the fruits (moving them on click)
 public class Fruit_Move : MonoBehaviour {
 
+    //Declaration of vaiables and other useful objects
     public Rigidbody2D rb;
     float thrust = 100f;
     public AudioSource Fruit_pressed;
@@ -19,16 +21,13 @@ public class Fruit_Move : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        //if (Input.GetKey(KeyCode.Mouse0))
-        //{
-        //    this.transform.Translate(0.1f, 0.1f, 0);
-        //}
-
+        
     }
 
+    //Function that moves the fruits (add forces) when they re clicked
     void OnMouseDown()
     {
-        // this object was clicked - do something
+    
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -38,8 +37,5 @@ public class Fruit_Move : MonoBehaviour {
             Fruit_pressed.Play();
         }
 
-       
-
-        //Destroy(this.gameObject);
     }
 }

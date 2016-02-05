@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Behaviour of the spikes objects in minigame 1 and 2
 public class Spikes_Behaviour : MonoBehaviour {
 
     private GameController_2 gameController;
@@ -12,16 +13,8 @@ public class Spikes_Behaviour : MonoBehaviour {
     void Start () {
 
         GameObject GameControllerObject = GameObject.FindWithTag("GameController");
-        if (GameControllerObject != null)
-        {
-            gameController = GameControllerObject.GetComponent<GameController_2>();
-        }
-
-        if (gameController == null)
-        {
-
-            Debug.Log("Cannot find 'GameController 2' script");
-        }
+        if (GameControllerObject != null) { gameController = GameControllerObject.GetComponent<GameController_2>(); }
+        if (gameController == null){ Debug.Log("Cannot find 'GameController 2' script"); }
 
 
     }
@@ -31,9 +24,10 @@ public class Spikes_Behaviour : MonoBehaviour {
 	
 	}
 
+    //Detects collisions
     void OnCollisionEnter2D(Collision2D col)
     {
-
+        //In minigame 1 simply destroy the fruits
         if (col.gameObject.tag == "Cherry" ||
            col.gameObject.tag == "Lemon"   ||
            col.gameObject.tag == "Orange"  ||
@@ -44,6 +38,7 @@ public class Spikes_Behaviour : MonoBehaviour {
 
         }
 
+        //In minigame 2 also subtracts points
         if (col.gameObject.tag == "Cherry_2" ||
             col.gameObject.tag == "Lemon_2"  ||
             col.gameObject.tag == "Orange_2" ||

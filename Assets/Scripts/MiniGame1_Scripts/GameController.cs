@@ -2,12 +2,14 @@
 using UnityEngine;
 using System.Collections;
 
+//The game controller for minigame 1
 public class GameController : MonoBehaviour {
 
+    //Declaration of variables and other useful objects
     public GUIText scoreText;
     public GUIText timeText;
 
-    private int Score;
+    public int Score;
     public float timeRemaining;
 
     public GameObject CherryPrefab;
@@ -18,17 +20,11 @@ public class GameController : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        //probably not needed here
-        CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
-        LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
-        OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
-        BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
-
+      
         timeRemaining = 60;
         Score = 0;
         UpdateScore();
-       
-
+  
     }
 	
 	// Update is called once per frame
@@ -44,12 +40,14 @@ public class GameController : MonoBehaviour {
 
     }
 
+    //Updates the displayed text
     void UpdateScore()
     {
 
         scoreText.text = "Score: " + Score;
     }
 
+    //Adds points to the score
     public void AddScore(int NewScoreValue)
     {
         if (timeRemaining > 30) { Score += NewScoreValue; }
@@ -59,6 +57,7 @@ public class GameController : MonoBehaviour {
         UpdateScore();
     }
 
+    //Subtracts points to the score
     public void SubtractScore(int NewScoreValue)
     {
         if (Score > 0)
@@ -75,10 +74,9 @@ public class GameController : MonoBehaviour {
     void UpdateTime()
     {
         if (timeRemaining > 0) { timeText.text = "Time: " + (int)timeRemaining; }
-        else { timeText.text = "Time's up! ";
-            GM.Get().framework.endMiniGame();
-        }
+        else                   { timeText.text = "Time's up! "; GM.Get().framework.endMiniGame();}
     }
+
 
     void UpdateDifficulty()
     {

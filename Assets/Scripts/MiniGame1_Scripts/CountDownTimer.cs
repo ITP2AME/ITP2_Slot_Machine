@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//A timer script. (PROBABLY NOT USED)
 public class CountDownTimer : MonoBehaviour {
 
     float timeRemaining = 60;
@@ -19,11 +20,7 @@ public class CountDownTimer : MonoBehaviour {
 
     void OnGui() {
 
-        if (timeRemaining > 0)
-        {
-            GUI.Label(new Rect(100, 100, 200, 100), "Time Remaining: " + timeRemaining);
-        }
-
-        else { GUI.Label(new Rect(100, 100, 100, 100), "Time's up!! "); }
+        if (timeRemaining > 0) {GUI.Label(new Rect(100, 100, 200, 100), "Time Remaining: " + timeRemaining);}
+        else                   {GUI.Label(new Rect(100, 100, 100, 100), "Time's up!! "); }
     }
 }

@@ -77,6 +77,7 @@ namespace Meshadieme
         public float gbp = 50.0f;
         public float multiCurrent = 1.0f;
         public int miniGame;
+        public int miniGame_Type;
         public float bet = 5.0f;
         public GameMode gMode;
         public string[] helpTexts; //Modify in editor
@@ -110,6 +111,10 @@ namespace Meshadieme
         GameObject miniGameText;
         GameObject miniGamePopUp;
 
+        public GameController_3 gameController_3;
+        public GameController_2 gameController_2;
+        public GameController gameController_1;
+
         bool otherSpinA, otherSpinB, otherSpinC = false;
         int[] multiStored = new int[] { 1, 0, 0 };
         int[] defShuffle = new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 };
@@ -124,8 +129,11 @@ namespace Meshadieme
         int otherPinState = 0;
         int[] results = new int[] { 0, 0, 0, 0, 0, 0}; // first three for main Pins, second three for secondary Pins
 
+       
+
         protected override void Awake()
         {
+            //Debug.Log("AWAKE READ");
             helpText = GM.Get().scene.miscRefs[0].GetComponent<Text>();
             coinText = GM.Get().scene.miscRefs[7].GetComponent<Text>();
             pinAText = GM.Get().scene.miscRefs[1].GetComponent<Text>();
@@ -148,6 +156,20 @@ namespace Meshadieme
             leverAudio = leverGameObject.GetComponents<AudioSource>(); //Accessing all the sound componenets on the lever object
             soundLeverDown = leverAudio[0]; //references to specific audio sources
             soundLeverRight = leverAudio[1];
+
+            //MiniGames Controllers initialized
+
+            //gameController_1 = GameObject.FindObjectOfType<GameController>();
+            ////if (GameControllerObject_1 != null) { gameController_1 = GameControllerObject_1.GetComponent<GameController>(); }
+            //if (gameController_1 == null) { Debug.Log("Cannot find 'GameController' script"); }
+
+            //gameController_2 = GameObject.FindObjectOfType<GameController_2>();
+            ////if (GameControllerObject_2 != null) { gameController_2 = GameControllerObject_2.GetComponent<GameController_2>(); }
+            //if (gameController_2 == null) { Debug.Log("Cannot find 'GameController 2' script"); }
+
+            //gameController_3 = GameObject.FindObjectOfType<GameController_3>();
+            ////if (GameControllerObject_3 != null) { gameController_3 = GameControllerObject_2.GetComponent<GameController_3>(); }
+            //if (gameController_3 == null) { Debug.Log("Cannot find 'GameController 3' script"); }
 
             //pin variables are initialized
             pinSymbols = new Sprite[6];
@@ -348,19 +370,42 @@ namespace Meshadieme
 
             //Starting minigame
             //Elio
-            
-           // if ((results[0] == 4 && results[1] == 4 && results[2] == 4) || (results[0] != results[1] && results[0] != results[2] && results[1] != results[2])) //|| (results[0] != results[1] && results[0] != results[2] && results[1] != results[2])
-            //{
+
+            if ((results[0] == 4 && results[1] == 4 && results[2] == 4) ||
+                (results[0] != results[1] && results[0] != results[2] && results[1] != results[2]) || 
+                (results[0] != results[1] && results[0] != results[2] && results[1] != results[2]))
+            {
                 yield return new WaitForSeconds(1);
                 miniGamePopUp.SetActive(true);
                 miniGameText.GetComponent<Text>().text = "Mini Game Name Goes Here" ;
                 yield return new WaitForSeconds(5);
                 miniGamePopUp.SetActive(false);
-                callMiniGame(MiniGames.mini1);
 
-            //}
-            
+                switch (Randomizer())
+                {
+                    case 0:
+                        callMiniGame(MiniGames.mini1);
+                        miniGame_Type = 1;
+                        break;
+                    case 1:
+                        callMiniGame(MiniGames.mini2);
+                        miniGame_Type = 2;
+                        break;
+                    case 2:
+                        callMiniGame(MiniGames.mini3);
+                        miniGame_Type = 3;
+                        break;
+                }
+
+            }
+
             yield return null;
+        }
+
+        int Randomizer()
+        {
+            int randomInt = Random.Range(0, 3);
+            return randomInt;
         }
 
         IEnumerator spinOtherPinA()
@@ -437,8 +482,9 @@ namespace Meshadieme
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[10].SetActive(true);
 
-                    result[0] = 1.0f;
-                    result[1] = 0.0f;
+                    result[0] = 2.0f;
+                    //result[1] = gameController_1.Score;
+                    
                     //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
                     // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
                     break;
@@ -446,8 +492,8 @@ namespace Meshadieme
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[11].SetActive(true);
 
-                    result[0] = 1.0f;
-                    result[1] = 0.0f;
+                    result[0] = 2.0f;
+                    //result[1] = gameController_2.Score;
                     //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
                     // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
                     break;
@@ -455,8 +501,8 @@ namespace Meshadieme
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[12].SetActive(true);
 
-                    result[0] = 1.0f;
-                    result[1] = 0.0f;
+                    result[0] = 2.0f;
+                    //result[1] = gameController_3.Score;
                     //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
                     // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
                     break;
@@ -484,6 +530,17 @@ namespace Meshadieme
                     break;
             }
             updateMulti();
+            switch (miniGame_Type)
+            {
+                case 1: result[1] = gameController_1.Score;
+                    break;
+                case 2: result[1] = gameController_2.Score;
+                    break;
+                case 3:
+                    result[1] = gameController_3.Score;
+                    break;
+            }
+
             gbp += result[1];
             coinText.text = gbp.ToString();
             //checkHighScore();
@@ -521,6 +578,8 @@ namespace Meshadieme
                         results[1] = sbDef.Next();
                         results[2] = sbDef.Next();
                         toUse = sbDef;
+                        gbp -= bet;
+                        coinText.text = gbp.ToString();
                     }
                     else
                     {//Second to Fourth Side Pull

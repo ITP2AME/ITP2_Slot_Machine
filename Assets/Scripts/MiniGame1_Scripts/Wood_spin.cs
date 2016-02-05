@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//Adds rotation to the wood panels
 public class Wood_spin : MonoBehaviour {
 
 	// Use this for initialization

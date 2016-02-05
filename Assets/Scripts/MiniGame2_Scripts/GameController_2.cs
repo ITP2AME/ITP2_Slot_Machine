@@ -1,12 +1,15 @@
-﻿using UnityEngine;
+﻿using Meshadieme;
+using UnityEngine;
 using System.Collections;
 
+//Game controller for Mini game 2
 public class GameController_2 : MonoBehaviour {
 
+    //Declaration of variables and other useful objects
     public GUIText scoreText;
     public GUIText timeText;
 
-    private int Score;
+    public int Score;
     public float timeRemaining;
 
     public GameObject CherryPrefab;
@@ -36,20 +39,20 @@ public class GameController_2 : MonoBehaviour {
 
         timeRemaining -= Time.deltaTime;
         UpdateTime();
-      
-
         if (Score < 0)
         { Score = 0; }
         UpdateScore();
 
     }
 
+    //Updates the score displayed
     void UpdateScore()
     {
 
         scoreText.text = "Score: " + Score;
     }
 
+    //Adds points to the score
     public void AddScore(int NewScoreValue)
     {
 
@@ -57,6 +60,7 @@ public class GameController_2 : MonoBehaviour {
         UpdateScore();
     }
 
+    //Subtracts points to the score
     public void SubtractScore(int NewScoreValue)
     {
         if (Score > 0)
@@ -66,36 +70,11 @@ public class GameController_2 : MonoBehaviour {
         }
     }
 
-
+    //Updates the remaining time for the minigame
     void UpdateTime()
     {
         if (timeRemaining > 0) { timeText.text = "Time: " + (int)timeRemaining; }
-        else
-        {
-            timeText.text = "Time's up! ";
-            //Add Exit Game code.
-        }
+        else                   {timeText.text = "Time's up! "; GM.Get().framework.endMiniGame();}
     }
 
-    //void UpdateDifficulty()
-    //{
-    //    //Increasing Gravity when 30 seconds are left
-    //    if (timeRemaining < 30)
-    //    {
-    //        CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
-    //        LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
-    //        OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
-    //        BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.5f;
-    //    }
-
-    //    //Further increasing gravity when 10 seconds are left
-    //    if (timeRemaining <= 10)
-    //    {
-    //        CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
-    //        LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
-    //        OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
-    //        BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 1.0f;
-    //    }
-
-    //}
 }
