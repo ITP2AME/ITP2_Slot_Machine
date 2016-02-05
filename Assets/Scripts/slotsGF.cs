@@ -483,7 +483,7 @@ namespace Meshadieme
                     GM.Get().scene.miscRefs[10].SetActive(true);
 
                     result[0] = 2.0f;
-                    //result[1] = gameController_1.Score;
+                    
                     
                     //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
                     // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
@@ -493,7 +493,7 @@ namespace Meshadieme
                     GM.Get().scene.miscRefs[11].SetActive(true);
 
                     result[0] = 2.0f;
-                    //result[1] = gameController_2.Score;
+                    
                     //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
                     // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
                     break;
@@ -502,7 +502,7 @@ namespace Meshadieme
                     GM.Get().scene.miscRefs[12].SetActive(true);
 
                     result[0] = 2.0f;
-                    //result[1] = gameController_3.Score;
+                   
                     //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
                     // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
                     break;
@@ -532,9 +532,11 @@ namespace Meshadieme
             updateMulti();
             switch (miniGame_Type)
             {
-                case 1: result[1] = gameController_1.Score;
+                case 1:
+                    result[1] = gameController_1.Score;
                     break;
-                case 2: result[1] = gameController_2.Score;
+                case 2:
+                    result[1] = gameController_2.Score;
                     break;
                 case 3:
                     result[1] = gameController_3.Score;
