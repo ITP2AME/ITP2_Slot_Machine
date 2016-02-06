@@ -74,15 +74,16 @@ namespace Meshadieme
     public class slotsGF : gameFramework
     {
 
-        public float gbp = 50.0f;
+        private float gbp = 5.0f;
+        public float TotScore = 0.0f;
         public float multiCurrent = 1.0f;
         public int miniGame;
         public int miniGame_Type;
-        public float bet = 5.0f;
+        private float bet = 1.0f;
         public GameMode gMode;
         public string[] helpTexts; //Modify in editor
         public float[] result;
-        Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet;
+        Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet,TotalScore;
         Button coinButton;
 
         //variable for controlling the lever
@@ -139,6 +140,7 @@ namespace Meshadieme
             pinAText = GM.Get().scene.miscRefs[1].GetComponent<Text>();
             pinBText = GM.Get().scene.miscRefs[2].GetComponent<Text>();
             pinCText = GM.Get().scene.miscRefs[3].GetComponent<Text>();
+            TotalScore = GM.Get().scene.miscRefs[13].GetComponent<Text>();
             otherPinAText = GM.Get().scene.miscRefs[4].GetComponentInChildren<Text>();
             otherPinBText = GM.Get().scene.miscRefs[5].GetComponentInChildren<Text>();
             otherPinCText = GM.Get().scene.miscRefs[6].GetComponentInChildren<Text>();
@@ -157,19 +159,6 @@ namespace Meshadieme
             soundLeverDown = leverAudio[0]; //references to specific audio sources
             soundLeverRight = leverAudio[1];
 
-            //MiniGames Controllers initialized
-
-            //gameController_1 = GameObject.FindObjectOfType<GameController>();
-            ////if (GameControllerObject_1 != null) { gameController_1 = GameControllerObject_1.GetComponent<GameController>(); }
-            //if (gameController_1 == null) { Debug.Log("Cannot find 'GameController' script"); }
-
-            //gameController_2 = GameObject.FindObjectOfType<GameController_2>();
-            ////if (GameControllerObject_2 != null) { gameController_2 = GameControllerObject_2.GetComponent<GameController_2>(); }
-            //if (gameController_2 == null) { Debug.Log("Cannot find 'GameController 2' script"); }
-
-            //gameController_3 = GameObject.FindObjectOfType<GameController_3>();
-            ////if (GameControllerObject_3 != null) { gameController_3 = GameControllerObject_2.GetComponent<GameController_3>(); }
-            //if (gameController_3 == null) { Debug.Log("Cannot find 'GameController 3' script"); }
 
             //pin variables are initialized
             pinSymbols = new Sprite[6];
@@ -543,8 +532,18 @@ namespace Meshadieme
                     break;
             }
 
-            gbp += result[1];
+            //Total Game Score Update
+            TotScore += result[1];
+            TotalScore.text = TotScore.ToString();
+
+            //Coin Update
+            if       (result[1] >= 100.0f && result[1] < 200.0f) { gbp += 2.0f; }
+            else  if (result[1] >= 200.0f && result[1] < 300.0f) { gbp += 3.0f; }
+            else if  (result[1] >= 300.0f && result[1] < 400.0f) { gbp += 4.0f; }
+            else if  (result[1] >= 400.0f) { gbp += 5.0f; }
             coinText.text = gbp.ToString();
+
+
             //checkHighScore();
         }
 
