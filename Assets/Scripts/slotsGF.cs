@@ -117,7 +117,7 @@ namespace Meshadieme
         public GameController gameController_1;
 
         bool otherSpinA, otherSpinB, otherSpinC = false;
-        int[] multiStored = new int[] { 1, 0, 0 };
+        int[] multiStored = new int[] { 0, 0, 0 };
         int[] defShuffle = new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 };
         int[] shuffleA = new int[] { 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0};
         int[] shuffleB = new int[] { 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0 };
@@ -360,9 +360,14 @@ namespace Meshadieme
             //Starting minigame
             //Elio
 
-            if ((results[0] == 4 && results[1] == 4 && results[2] == 4) ||
-                (results[0] != results[1] && results[0] != results[2] && results[1] != results[2]) || 
-                (results[0] != results[1] && results[0] != results[2] && results[1] != results[2]))
+            //if ((results[0] == 4 && results[1] == 4 && results[2] == 4) ||
+            //    (results[0] != results[1] && results[0] != results[2] && results[1] != results[2]) || 
+            //    (results[0] != results[1] && results[0] != results[2] && results[1] != results[2]))
+
+            if (((results[0] == results[1]) && (results[1] == results[2])) ||
+                ((results[0] == results[1]) && (results[1] != results[2])) ||
+                ((results[0] != results[1]) && (results[1] == results[2])) ||
+                ((results[0] == results[2])&&(results[1]!=results[2])))
             {
                 yield return new WaitForSeconds(1);
                 miniGamePopUp.SetActive(true);
@@ -471,7 +476,7 @@ namespace Meshadieme
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[10].SetActive(true);
 
-                    result[0] = 2.0f;
+                    //result[0] = 2.0f;
                     
                     
                     //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
@@ -481,7 +486,7 @@ namespace Meshadieme
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[11].SetActive(true);
 
-                    result[0] = 2.0f;
+                    //result[0] = 2.0f;
                     
                     //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
                     // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
@@ -490,7 +495,7 @@ namespace Meshadieme
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[12].SetActive(true);
 
-                    result[0] = 2.0f;
+                    //result[0] = 2.0f;
                    
                     //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
                     // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
@@ -537,10 +542,10 @@ namespace Meshadieme
             TotalScore.text = TotScore.ToString();
 
             //Coin Update
-            if       (result[1] >= 100.0f && result[1] < 200.0f) { gbp += 2.0f; }
-            else  if (result[1] >= 200.0f && result[1] < 300.0f) { gbp += 3.0f; }
-            else if  (result[1] >= 300.0f && result[1] < 400.0f) { gbp += 4.0f; }
-            else if  (result[1] >= 400.0f) { gbp += 5.0f; }
+            if       (result[1] >= 100.0f && result[1] < 200.0f) { gbp += 1.0f; }
+            else  if (result[1] >= 200.0f && result[1] < 300.0f) { gbp += 2.0f; result[0] = 2.0f; }
+            else if  (result[1] >= 300.0f && result[1] < 400.0f) { gbp += 3.0f; result[0] = 3.0f; }
+            else if  (result[1] >= 400.0f) { gbp += 5.0f; result[0] = 4.0f; }
             coinText.text = gbp.ToString();
 
 
