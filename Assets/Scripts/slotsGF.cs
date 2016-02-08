@@ -376,12 +376,12 @@ namespace Meshadieme
                     else if (results[0] == 2) { gbp += bet * 4; }
                     else if (results[0] == 3) { gbp += bet * 5; }
                     else if (results[0] == 4) { gbp += bet * 10; }
-                    else if (results[0] == 5) { gbp += bet * Random.Range(0, 10); }
+                    else if (results[0] == 5) { gbp += bet * Random.Range(0, 15); }
 
                 }
 
                 //NOT SURE (Trying)
-                else { gbp += 1; }
+                //else { gbp += 1; }
 
                 coinText.text = gbp.ToString();
 
