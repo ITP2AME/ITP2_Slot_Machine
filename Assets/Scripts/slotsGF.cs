@@ -83,7 +83,7 @@ namespace Meshadieme
         public GameMode gMode;
         public string[] helpTexts; //Modify in editor
         public float[] result;
-        Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet,TotalScore;
+        Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet,TotalScore,CurrentMultUsed;
         Button coinButton;
         bool UsedX2 = false;
         bool UsedX3 = false;
@@ -120,7 +120,7 @@ namespace Meshadieme
         public GameController gameController_1;
 
         bool otherSpinA, otherSpinB, otherSpinC = false;
-        int[] multiStored = new int[] { 1, 0, 0 };
+        int[] multiStored = new int[] { 2, 2, 2 };
         int[] defShuffle = new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 };
         int[] shuffleA = new int[] { 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0};
         int[] shuffleB = new int[] { 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0 };
@@ -138,6 +138,7 @@ namespace Meshadieme
         protected override void Awake()
         {
             //Debug.Log("AWAKE READ");
+            CurrentMultUsed = GM.Get().scene.miscRefs[14].GetComponent<Text>();
             helpText = GM.Get().scene.miscRefs[0].GetComponent<Text>();
             coinText = GM.Get().scene.miscRefs[7].GetComponent<Text>();
             pinAText = GM.Get().scene.miscRefs[1].GetComponent<Text>();
@@ -147,9 +148,9 @@ namespace Meshadieme
             otherPinAText = GM.Get().scene.miscRefs[4].GetComponentInChildren<Text>();
             otherPinBText = GM.Get().scene.miscRefs[5].GetComponentInChildren<Text>();
             otherPinCText = GM.Get().scene.miscRefs[6].GetComponentInChildren<Text>();
-            extraMultiA = GM.Get().scene.buttonRefs[3].GetComponent<Text>();
-            extraMultiB = GM.Get().scene.buttonRefs[4].GetComponent<Text>();
-            extraMultiC = GM.Get().scene.buttonRefs[5].GetComponent<Text>();
+            extraMultiA = GM.Get().scene.buttonRefs[3].GetComponentInChildren<Text>();
+            extraMultiB = GM.Get().scene.buttonRefs[4].GetComponentInChildren<Text>();
+            extraMultiC = GM.Get().scene.buttonRefs[5].GetComponentInChildren<Text>();
             toBet = GM.Get().scene.miscRefs[8].GetComponent<Text>();
             gMode = 0;
 
@@ -254,6 +255,11 @@ namespace Meshadieme
             extraMultiA.text = multiStored[0].ToString() + " Left";
             extraMultiB.text = multiStored[1].ToString() + " Left";
             extraMultiC.text = multiStored[2].ToString() + " Left";
+
+            if      (UsedX2) { CurrentMultUsed.text = "X2".ToString(); }
+            else if (UsedX3) { CurrentMultUsed.text = "X3".ToString(); }
+            else if (UsedX4) { CurrentMultUsed.text = "X4".ToString(); }
+            else             { CurrentMultUsed.text = "None".ToString(); }
         }
 
         IEnumerator spinPins()
@@ -374,7 +380,7 @@ namespace Meshadieme
             {
                 if ((results[0] == results[1]) && (results[1] == results[2]))
                 {
-                    if      (results[0] == 0) { gbp += bet * 2; }
+                    if (results[0] == 0) { gbp += bet * 2; }
                     else if (results[0] == 1) { gbp += bet * 3; }
                     else if (results[0] == 2) { gbp += bet * 4; }
                     else if (results[0] == 3) { gbp += bet * 5; }
@@ -390,7 +396,7 @@ namespace Meshadieme
 
                 yield return new WaitForSeconds(1);
                 miniGamePopUp.SetActive(true);
-                miniGameText.GetComponent<Text>().text = "Mini Game Name Goes Here" ;
+                miniGameText.GetComponent<Text>().text = "Mini Game Name Goes Here";
                 yield return new WaitForSeconds(5);
                 miniGamePopUp.SetActive(false);
 
@@ -410,6 +416,15 @@ namespace Meshadieme
                         break;
                 }
 
+            }
+
+            else
+            {
+                 UsedX2 = false;
+                 UsedX3 = false;
+                 UsedX4 = false;
+
+                updateMulti();
             }
 
             yield return null;
@@ -532,6 +547,7 @@ namespace Meshadieme
             GM.Get().scene.miscRefs[12].SetActive(false);
           
             updateMulti();
+
             switch (miniGame_Type)
             {
                 case 1:
@@ -545,8 +561,12 @@ namespace Meshadieme
                     break;
             }
 
+            resetMini();
+
             //Total Game Score Update
-            if (UsedX2) { TotScore += result[1]*2; UsedX2 = false; }
+            if      (UsedX2) { TotScore += result[1] * 2; UsedX2 = false; }
+            else if (UsedX3) { TotScore += result[1] * 3; UsedX3 = false; }
+            else if (UsedX4) { TotScore += result[1] * 4; UsedX4 = false; }
             else { TotScore += result[1]; }
             TotalScore.text = TotScore.ToString();
 
@@ -554,7 +574,7 @@ namespace Meshadieme
             if       (result[1] >= 100.0f && result[1] < 200.0f) { gbp += 1.0f; result[0] = 1.0f; }
             else  if (result[1] >= 200.0f && result[1] < 300.0f) { gbp += 2.0f; result[0] = 2.0f; }
             else if  (result[1] >= 300.0f && result[1] < 400.0f) { gbp += 3.0f; result[0] = 3.0f; }
-            else if  (result[1] >= 400.0f) { gbp += 5.0f; result[0] = 4.0f; }
+            else if  (result[1] >= 400.0f)                       { gbp += 5.0f; result[0] = 4.0f; }
             coinText.text = gbp.ToString();
 
             //Multiplier update
@@ -588,6 +608,17 @@ namespace Meshadieme
             results[2] = sbDef.Next();
             //martin update the Pin images here to have random Pins at the start as well.
             updateMulti();
+        }
+
+        void resetMini() {
+
+            gameController_1.Score=0;
+            gameController_2.Score=0;
+            gameController_3.Score=0;
+
+            gameController_1.timeRemaining = 60;
+            gameController_2.timeRemaining = 120;
+            gameController_3.timeRemaining = 60;
         }
 
         public void procCmds(int buttonIndex)
@@ -649,20 +680,31 @@ namespace Meshadieme
                     toBet.text = bet.ToString();
                     break;
                 case 3: //MultiA
-                    if (multiStored[0] != 0)
+                    if (multiStored[0] != 0 && !UsedX2 && !UsedX3 && !UsedX4)
                     {
                         multiStored[0]--;
                         UsedX2 = true;
                     }
-                    
                     updateMulti();
                     Debug.Log("X2 Worked Elio");
                     break;
                 case 4: //MultiB
-                    Debug.Log("x3");
+                    if (multiStored[1] != 0 && !UsedX2 && !UsedX3 && !UsedX4)
+                    {
+                        multiStored[1]--;
+                        UsedX3 = true;
+                    }
+                    updateMulti();
+                    Debug.Log("X3 Worked Elio");
                     break;
                 case 5: //MultiC
-                    Debug.Log("x4");
+                    if (multiStored[2] != 0 && !UsedX2 && !UsedX3 && !UsedX4)
+                    {
+                        multiStored[2]--;
+                        UsedX4 = true;
+                    }
+                    updateMulti();
+                    Debug.Log("X4 Worked Elio");
                     break;
             }
 
