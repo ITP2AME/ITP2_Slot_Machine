@@ -511,18 +511,7 @@ namespace Meshadieme
             GM.Get().scene.miscRefs[10].SetActive(false);
             GM.Get().scene.miscRefs[11].SetActive(false);
             GM.Get().scene.miscRefs[12].SetActive(false);
-            switch ((int) result[0])
-            {
-                case 2:
-                    multiStored[0]++;
-                    break;
-                case 3:
-                    multiStored[1]++;
-                    break;
-                case 4:
-                    multiStored[2]++;
-                    break;
-            }
+          
             updateMulti();
             switch (miniGame_Type)
             {
@@ -542,11 +531,29 @@ namespace Meshadieme
             TotalScore.text = TotScore.ToString();
 
             //Coin Update
-            if       (result[1] >= 100.0f && result[1] < 200.0f) { gbp += 1.0f; }
+            if       (result[1] >= 100.0f && result[1] < 200.0f) { gbp += 1.0f; result[0] = 1.0f; }
             else  if (result[1] >= 200.0f && result[1] < 300.0f) { gbp += 2.0f; result[0] = 2.0f; }
             else if  (result[1] >= 300.0f && result[1] < 400.0f) { gbp += 3.0f; result[0] = 3.0f; }
             else if  (result[1] >= 400.0f) { gbp += 5.0f; result[0] = 4.0f; }
             coinText.text = gbp.ToString();
+
+            //Multiplier update
+            switch ((int)result[0])
+            {
+                case 2:
+                    multiStored[0]++;
+                    extraMultiA.text = multiStored[0] + " Left".ToString();
+                    break;
+                case 3:
+                    multiStored[1]++;
+                    extraMultiB.text = multiStored[1] + " Left".ToString();
+                    break;
+                case 4:
+                    multiStored[2]++;
+                    extraMultiC.text = multiStored[2] + " Left".ToString();
+                    break;
+                case 1: break;
+            }
 
 
             //checkHighScore();
