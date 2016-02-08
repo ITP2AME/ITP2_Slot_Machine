@@ -85,6 +85,9 @@ namespace Meshadieme
         public float[] result;
         Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet,TotalScore;
         Button coinButton;
+        bool UsedX2 = false;
+        bool UsedX3 = false;
+        bool UsedX4 = false;
 
         //variable for controlling the lever
         public bool leverMode;
@@ -117,7 +120,7 @@ namespace Meshadieme
         public GameController gameController_1;
 
         bool otherSpinA, otherSpinB, otherSpinC = false;
-        int[] multiStored = new int[] { 0, 0, 0 };
+        int[] multiStored = new int[] { 1, 0, 0 };
         int[] defShuffle = new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 };
         int[] shuffleA = new int[] { 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0};
         int[] shuffleB = new int[] { 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0 };
@@ -543,7 +546,8 @@ namespace Meshadieme
             }
 
             //Total Game Score Update
-            TotScore += result[1];
+            if (UsedX2) { TotScore += result[1]*2; UsedX2 = false; }
+            else { TotScore += result[1]; }
             TotalScore.text = TotScore.ToString();
 
             //Coin Update
@@ -558,19 +562,20 @@ namespace Meshadieme
             {
                 case 2:
                     multiStored[0]++;
-                    extraMultiA.text = multiStored[0] + " Left".ToString();
+                    //extraMultiA.text = multiStored[0] + " Left".ToString();
                     break;
                 case 3:
                     multiStored[1]++;
-                    extraMultiB.text = multiStored[1] + " Left".ToString();
+                    //extraMultiB.text = multiStored[1] + " Left".ToString();
                     break;
                 case 4:
                     multiStored[2]++;
-                    extraMultiC.text = multiStored[2] + " Left".ToString();
+                    //extraMultiC.text = multiStored[2] + " Left".ToString();
                     break;
                 case 1: break;
             }
 
+            updateMulti();
 
             //checkHighScore();
         }
@@ -644,7 +649,14 @@ namespace Meshadieme
                     toBet.text = bet.ToString();
                     break;
                 case 3: //MultiA
-                    Debug.Log("x2");
+                    if (multiStored[0] != 0)
+                    {
+                        multiStored[0]--;
+                        UsedX2 = true;
+                    }
+                    
+                    updateMulti();
+                    Debug.Log("X2 Worked Elio");
                     break;
                 case 4: //MultiB
                     Debug.Log("x3");
