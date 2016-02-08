@@ -48,7 +48,6 @@ public class GameController_2 : MonoBehaviour {
     //Updates the score displayed
     void UpdateScore()
     {
-
         scoreText.text = "Score: " + Score;
     }
 

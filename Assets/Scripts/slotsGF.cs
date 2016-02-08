@@ -367,8 +367,24 @@ namespace Meshadieme
             if (((results[0] == results[1]) && (results[1] == results[2])) ||
                 ((results[0] == results[1]) && (results[1] != results[2])) ||
                 ((results[0] != results[1]) && (results[1] == results[2])) ||
-                ((results[0] == results[2])&&(results[1]!=results[2])))
+                ((results[0] == results[2]) && (results[1] != results[2])))
             {
+                if ((results[0] == results[1]) && (results[1] == results[2]))
+                {
+                    if      (results[0] == 0) { gbp += bet * 2; }
+                    else if (results[0] == 1) { gbp += bet * 3; }
+                    else if (results[0] == 2) { gbp += bet * 4; }
+                    else if (results[0] == 3) { gbp += bet * 5; }
+                    else if (results[0] == 4) { gbp += bet * 10; }
+                    else if (results[0] == 5) { gbp += bet * Random.Range(0, 10); }
+
+                }
+
+                //NOT SURE (Trying)
+                else { gbp += 1; }
+
+                coinText.text = gbp.ToString();
+
                 yield return new WaitForSeconds(1);
                 miniGamePopUp.SetActive(true);
                 miniGameText.GetComponent<Text>().text = "Mini Game Name Goes Here" ;
