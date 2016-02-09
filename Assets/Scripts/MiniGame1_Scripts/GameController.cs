@@ -17,10 +17,14 @@ public class GameController : MonoBehaviour {
     public GameObject OrangePrefab;
     public GameObject BananaPrefab;
 
-    // Use this for initialization
-    void Start () {
+    Cherries_Generator newGen;
 
-      
+    // Use this for initialization
+    public void Init()
+    {
+        newGen = GameObject.FindWithTag("Gen1").GetComponent<Cherries_Generator>();
+        newGen.Init();
+
         timeRemaining = 60;
         Score = 0;
         UpdateScore();

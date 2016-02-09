@@ -17,9 +17,13 @@ public class GameController_2 : MonoBehaviour {
     public GameObject OrangePrefab;
     public GameObject BananaPrefab;
 
+    Fruit_Generator newGen;
+
     // Use this for initialization
-    void Start()
+    public void Init()
     {
+        newGen = GameObject.FindWithTag("Gen2").GetComponent<Fruit_Generator>();
+        newGen.Init();
 
         CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
         LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.1f;

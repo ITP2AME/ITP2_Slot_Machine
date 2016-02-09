@@ -19,11 +19,14 @@ public class GameController_3 : MonoBehaviour {
     public GameObject LemonPrefab;
     public GameObject OrangePrefab;
     public GameObject BananaPrefab;
+    Generator_3 newGen;
 
     // Use this for initialization
-    void Start()
+   public void Init()
     {
-
+       
+        newGen = GameObject.FindWithTag("Gen3").GetComponent<Generator_3>();
+        newGen.Init();
         timeRemaining = 60;
         Score = 0;
         UpdateScore();

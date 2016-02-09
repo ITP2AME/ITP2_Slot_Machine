@@ -14,7 +14,7 @@ public class Cherries_Generator : MonoBehaviour {
     float rateSpawn;
 
     // Use this for initialization
-    void Start () {
+    public void Init () {
 
         Cherry.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
         Lemon.GetComponent<Rigidbody2D>().gravityScale = 0.2f;

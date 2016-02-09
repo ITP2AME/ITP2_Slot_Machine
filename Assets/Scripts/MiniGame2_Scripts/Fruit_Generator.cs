@@ -14,7 +14,7 @@ public class Fruit_Generator : MonoBehaviour {
     GameObject CurrentFruit;
 
     // Use this for initialization
-    void Start()
+    public void Init()
     {
 
         Cherry.GetComponent<Rigidbody2D>().gravityScale = 0.1f;

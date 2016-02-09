@@ -14,7 +14,7 @@ public class Generator_3 : MonoBehaviour {
     GameObject CurrentFruit;
 
     // Use this for initialization
-    void Start()
+    public void Init()
     {
         //Setting the gravity scale of Fruits Prefabs
         Cherry.GetComponent<Rigidbody2D>().gravityScale = 0.1f;

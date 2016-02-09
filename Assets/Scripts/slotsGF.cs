@@ -510,25 +510,28 @@ namespace Meshadieme
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[10].SetActive(true);
 
+                    gameController_1.Init();
+
                     //result[0] = 2.0f;
-                    
-                    
+
+
                     //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
                     // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
                     break;
                 case MiniGames.mini2:
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[11].SetActive(true);
+                    gameController_2.Init();
 
                     //result[0] = 2.0f;
-                    
+
                     //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
                     // Set result variable (its a array of 2 floats) this first float is the new nultiplier to store, second float is the bonus coins won. 
                     break;
                 case MiniGames.mini3:
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[12].SetActive(true);
-
+                    gameController_3.Init();
                     //result[0] = 2.0f;
                    
                     //enable minigame node / objects and access them (u can use your own script to access GM.Get().scene... scene references
@@ -561,7 +564,7 @@ namespace Meshadieme
                     break;
             }
 
-            resetMini();
+            
 
             //Total Game Score Update
             if      (UsedX2) { TotScore += result[1] * 2; UsedX2 = false; }
@@ -610,16 +613,6 @@ namespace Meshadieme
             updateMulti();
         }
 
-        void resetMini() {
-
-            gameController_1.Score=0;
-            gameController_2.Score=0;
-            gameController_3.Score=0;
-
-            gameController_1.timeRemaining = 60;
-            gameController_2.timeRemaining = 120;
-            gameController_3.timeRemaining = 60;
-        }
 
         public void procCmds(int buttonIndex)
         {
