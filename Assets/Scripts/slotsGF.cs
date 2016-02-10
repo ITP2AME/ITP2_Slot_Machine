@@ -83,7 +83,7 @@ namespace Meshadieme
         public GameMode gMode;
         public string[] helpTexts; //Modify in editor
         public float[] result;
-        Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet,TotalScore,CurrentMultUsed,FinalGameScore;
+        Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet,TotalScore,CurrentMultUsed,FinalGameScore,HighScore;
         Button coinButton;
         bool UsedX2 = false;
         bool UsedX3 = false;
@@ -120,7 +120,7 @@ namespace Meshadieme
         public GameController gameController_1;
 
         bool otherSpinA, otherSpinB, otherSpinC = false;
-        int[] multiStored = new int[] { 2, 2, 2 };
+        int[] multiStored = new int[] { 1, 0, 0 };
         int[] defShuffle = new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 };
         int[] shuffleA = new int[] { 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0};
         int[] shuffleB = new int[] { 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0 };
@@ -151,6 +151,7 @@ namespace Meshadieme
             pinBText = GM.Get().scene.miscRefs[2].GetComponent<Text>();
             pinCText = GM.Get().scene.miscRefs[3].GetComponent<Text>();
             TotalScore = GM.Get().scene.miscRefs[13].GetComponent<Text>();
+            HighScore = GM.Get().scene.miscRefs[17].GetComponent<Text>();
             FinalGameScore = GM.Get().scene.miscRefs[9].GetComponent<Text>();
             otherPinAText = GM.Get().scene.miscRefs[4].GetComponentInChildren<Text>();
             otherPinBText = GM.Get().scene.miscRefs[5].GetComponentInChildren<Text>();
@@ -587,8 +588,8 @@ namespace Meshadieme
             TotalScore.text = TotScore.ToString();
 
             //Coin Update
-            if       (result[1] >= 100.0f && result[1] < 200.0f) { gbp += 1.0f; result[0] = 1.0f; }
-            else  if (result[1] >= 200.0f && result[1] < 300.0f) { gbp += 2.0f; result[0] = 2.0f; }
+            if       (result[1] >= 100.0f && result[1] < 200.0f) { gbp += 0.0f; result[0] = 1.0f; }
+            else  if (result[1] >= 200.0f && result[1] < 300.0f) { gbp += 1.0f; result[0] = 2.0f; }
             else if  (result[1] >= 300.0f && result[1] < 400.0f) { gbp += 3.0f; result[0] = 3.0f; }
             else if  (result[1] >= 400.0f)                       { gbp += 5.0f; result[0] = 4.0f; }
             coinText.text = gbp.ToString();
@@ -632,6 +633,7 @@ namespace Meshadieme
                     //Call End game
                     
                     FinalGameScore.text = "Your Score: " + TotScore.ToString();
+                    HighScore.text = "High Score: " + hscore.ToString();
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[16].SetActive(true);
                     

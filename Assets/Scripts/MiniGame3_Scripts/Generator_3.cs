@@ -17,10 +17,10 @@ public class Generator_3 : MonoBehaviour {
     public void Init()
     {
         //Setting the gravity scale of Fruits Prefabs
-        Cherry.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
-        Lemon.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
-        Orange.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
-        Banana.GetComponent<Rigidbody2D>().gravityScale = 0.1f;
+        Cherry.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+        Lemon.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+        Orange.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+        Banana.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
 
         //Setting The rate at which the fruits are spawn
         rateSpawn = 0.5f;

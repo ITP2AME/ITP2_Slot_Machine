@@ -11,6 +11,7 @@ public class Fruit_Move_3 : MonoBehaviour {
     public int SubValue;
     private ICON_Selector_3 IconType;
     private GameController_3 gameController;
+    
 
     // Use this for initialization
     void Start()
