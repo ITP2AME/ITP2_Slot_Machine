@@ -37,6 +37,7 @@ public class ICON_Selector : MonoBehaviour {
     //Updates at every frame
     void Update() {
 
+        if (gameController.timeRemaining >= 60) { timer = 10; }
         if (gameController.timeRemaining > 30) { delay = 10; }
         if (gameController.timeRemaining <= 30 && gameController.timeRemaining > 10) { delay = 5; }
         if (gameController.timeRemaining <= 10) { delay = 3; }

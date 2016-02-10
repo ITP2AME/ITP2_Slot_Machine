@@ -83,7 +83,7 @@ namespace Meshadieme
         public GameMode gMode;
         public string[] helpTexts; //Modify in editor
         public float[] result;
-        Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet,TotalScore,CurrentMultUsed;
+        Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet,TotalScore,CurrentMultUsed,FinalGameScore;
         Button coinButton;
         bool UsedX2 = false;
         bool UsedX3 = false;
@@ -133,11 +133,17 @@ namespace Meshadieme
         int otherPinState = 0;
         int[] results = new int[] { 0, 0, 0, 0, 0, 0}; // first three for main Pins, second three for secondary Pins
 
+        float hscore;
+
        
 
         protected override void Awake()
         {
             //Debug.Log("AWAKE READ");
+
+
+            GM.Get().data.initSaveGame();
+
             CurrentMultUsed = GM.Get().scene.miscRefs[14].GetComponent<Text>();
             helpText = GM.Get().scene.miscRefs[0].GetComponent<Text>();
             coinText = GM.Get().scene.miscRefs[7].GetComponent<Text>();
@@ -145,6 +151,7 @@ namespace Meshadieme
             pinBText = GM.Get().scene.miscRefs[2].GetComponent<Text>();
             pinCText = GM.Get().scene.miscRefs[3].GetComponent<Text>();
             TotalScore = GM.Get().scene.miscRefs[13].GetComponent<Text>();
+            FinalGameScore = GM.Get().scene.miscRefs[9].GetComponent<Text>();
             otherPinAText = GM.Get().scene.miscRefs[4].GetComponentInChildren<Text>();
             otherPinBText = GM.Get().scene.miscRefs[5].GetComponentInChildren<Text>();
             otherPinCText = GM.Get().scene.miscRefs[6].GetComponentInChildren<Text>();
@@ -380,12 +387,13 @@ namespace Meshadieme
             {
                 if ((results[0] == results[1]) && (results[1] == results[2]))
                 {
-                    if (results[0] == 0) { gbp += bet * 2; }
+                    if      (results[0] == 0) { gbp += bet * 2; }
                     else if (results[0] == 1) { gbp += bet * 3; }
                     else if (results[0] == 2) { gbp += bet * 4; }
                     else if (results[0] == 3) { gbp += bet * 5; }
                     else if (results[0] == 4) { gbp += bet * 10; }
-                    else if (results[0] == 5) { gbp += bet * Random.Range(0, 15); }
+                    else if (results[0] == 5) { gbp += bet * (Random.Range(0, 10)); }
+                    //coinText.text = gbp.ToString();
 
                 }
 
@@ -394,25 +402,27 @@ namespace Meshadieme
 
                 coinText.text = gbp.ToString();
 
-                yield return new WaitForSeconds(1);
+                //yield return new WaitForSeconds(1);
                 miniGamePopUp.SetActive(true);
                 miniGameText.GetComponent<Text>().text = "Mini Game Name Goes Here";
+                gMode = GameMode.MiniGame;
                 yield return new WaitForSeconds(5);
                 miniGamePopUp.SetActive(false);
+              
 
                 switch (Randomizer())
                 {
                     case 0:
-                        callMiniGame(MiniGames.mini1);
                         miniGame_Type = 1;
+                        callMiniGame(MiniGames.mini1);
                         break;
                     case 1:
-                        callMiniGame(MiniGames.mini2);
                         miniGame_Type = 2;
+                        callMiniGame(MiniGames.mini2);
                         break;
                     case 2:
-                        callMiniGame(MiniGames.mini3);
                         miniGame_Type = 3;
+                        callMiniGame(MiniGames.mini3);
                         break;
                 }
 
@@ -425,6 +435,8 @@ namespace Meshadieme
                  UsedX4 = false;
 
                 updateMulti();
+
+                checkHighScore();
             }
 
             yield return null;
@@ -544,6 +556,7 @@ namespace Meshadieme
         //call this at the end of your mini game to take the results
         public void endMiniGame()
         {
+            gMode = GameMode.Slots;
             GM.Get().scene.miscRefs[15].SetActive(true);
             GM.Get().scene.miscRefs[10].SetActive(false);
             GM.Get().scene.miscRefs[11].SetActive(false);
@@ -599,8 +612,32 @@ namespace Meshadieme
             }
 
             updateMulti();
+            checkHighScore();
+        }
 
-            //checkHighScore();
+        void checkHighScore()
+        {
+            if (gMode == GameMode.Slots)
+            {
+                if (TotScore > hscore )
+                {
+                    hscore = TotScore;
+                    GM.Get().data.highScore[0] = hscore;
+                    GM.Get().data.saveGame();
+                }
+                Debug.Log(hscore);
+
+                if (gbp <= 0)
+                {
+                    //Call End game
+                    
+                    FinalGameScore.text = "Your Score: " + TotScore.ToString();
+                    GM.Get().scene.miscRefs[15].SetActive(false);
+                    GM.Get().scene.miscRefs[16].SetActive(true);
+                    
+                }
+
+            }
         }
 
         void initSlots()
@@ -613,91 +650,133 @@ namespace Meshadieme
             updateMulti();
         }
 
+        void resetSlot() {
+
+            GM.Get().scene.miscRefs[16].SetActive(false);
+            GM.Get().scene.miscRefs[15].SetActive(true);
+            
+
+            gbp = 5.0f;
+            coinText.text = gbp.ToString();
+
+            TotScore = 0.0f;
+            TotalScore.text = TotScore.ToString();
+
+            multiCurrent = 1.0f;
+            multiStored[0] = 1;
+            multiStored[1] = 0;
+            multiStored[2] = 0;
+            updateMulti();
+
+            bet = 1.0f;
+            toBet.text = bet.ToString();
+
+        }
+
 
         public void procCmds(int buttonIndex)
         {
+            Debug.Log(gMode);
             switch (buttonIndex)
             {
-                case 0: 
-                    if (leverMode)
-                    {//First Pull
-                        leverAnimator.SetBool("LeverPulled", true); //makes the lever go down
-                        soundLeverDown.Play(); // plays a lever sound
-                        changeColor("greenLightbulp", false);
-                        changeColor("redLightbulp", true);
-                        Debug.Log("Lever Down");
-                        leverMode = !leverMode;
-                        StartCoroutine(spinPins());
-                        otherPinState = 0;
-                        StartCoroutine(spinOtherPinA());
-                        StartCoroutine(spinOtherPinB());
-                        StartCoroutine(spinOtherPinC());
-                        results[0] = sbDef.Next();
-                        results[1] = sbDef.Next();
-                        results[2] = sbDef.Next();
-                        toUse = sbDef;
-                        gbp -= bet;
-                        coinText.text = gbp.ToString();
-                    }
-                    else
-                    {//Second to Fourth Side Pull
-                        
-                        if (otherPinState < 3)
-                        {
-                            leverAnimator.SetTrigger("LeverPulledRight"); //makes the lever go right and back again
-                            soundLeverRight.Play(); // plays a lever sound
-                            Debug.Log("Lever Side = " + otherPinState);
-                            switch (otherPinState)
+                case 0:
+                    if (gMode == GameMode.Slots)
+                    {
+                        if (leverMode && (gbp>=bet))
+                        {//First Pull
+                            leverAnimator.SetBool("LeverPulled", true); //makes the lever go down
+                            soundLeverDown.Play(); // plays a lever sound
+                            changeColor("greenLightbulp", false);
+                            changeColor("redLightbulp", true);
+                            Debug.Log("Lever Down");
+                            leverMode = !leverMode;
+                            StartCoroutine(spinPins());
+                            otherPinState = 0;
+                            StartCoroutine(spinOtherPinA());
+                            StartCoroutine(spinOtherPinB());
+                            StartCoroutine(spinOtherPinC());
+                            results[0] = sbDef.Next();
+                            results[1] = sbDef.Next();
+                            results[2] = sbDef.Next();
+                            toUse = sbDef;
+                            gbp -= bet;
+                            coinText.text = gbp.ToString();
+                        }
+                        else
+                        {//Second to Fourth Side Pull
+
+                            if (otherPinState < 3)
                             {
-                                case 0:
-                                    stopOtherPinA();
-                                    break;
-                                case 1:
-                                    stopOtherPinB();
-                                    break;
-                                case 2:
-                                    stopOtherPinC();
-                                    break;
+                                leverAnimator.SetTrigger("LeverPulledRight"); //makes the lever go right and back again
+                                soundLeverRight.Play(); // plays a lever sound
+                                Debug.Log("Lever Side = " + otherPinState);
+                                switch (otherPinState)
+                                {
+                                    case 0:
+                                        stopOtherPinA();
+                                        break;
+                                    case 1:
+                                        stopOtherPinB();
+                                        break;
+                                    case 2:
+                                        stopOtherPinC();
+                                        break;
+                                }
+
+                                otherPinState++;
                             }
-                            
-                            otherPinState++;
                         }
                     }
                     break;
                 case 1: //Minus
-                    bet--;
-                    toBet.text = bet.ToString();
+                    if (gMode == GameMode.Slots && bet > 1)
+                    {
+                        bet--;
+                        toBet.text = bet.ToString();
+                    }
                     break;
                 case 2: //Plus
-                    bet++;
-                    toBet.text = bet.ToString();
+                    if (gMode == GameMode.Slots && bet < gbp)
+                    {
+                        bet++;
+                        toBet.text = bet.ToString();
+                    }
                     break;
                 case 3: //MultiA
-                    if (multiStored[0] != 0 && !UsedX2 && !UsedX3 && !UsedX4)
+                    if (gMode == GameMode.Slots && leverMode)
                     {
-                        multiStored[0]--;
-                        UsedX2 = true;
+                        if (multiStored[0] != 0 && !UsedX2 && !UsedX3 && !UsedX4)
+                        {
+                            multiStored[0]--;
+                            UsedX2 = true;
+                        }
+                        updateMulti();
+                        Debug.Log("X2 Worked Elio");
                     }
-                    updateMulti();
-                    Debug.Log("X2 Worked Elio");
                     break;
                 case 4: //MultiB
-                    if (multiStored[1] != 0 && !UsedX2 && !UsedX3 && !UsedX4)
+                    if (gMode == GameMode.Slots && leverMode)
                     {
-                        multiStored[1]--;
-                        UsedX3 = true;
+                        if (multiStored[1] != 0 && !UsedX2 && !UsedX3 && !UsedX4)
+                        {
+                            multiStored[1]--;
+                            UsedX3 = true;
+                        }
+                        updateMulti();
+                        Debug.Log("X3 Worked Elio");
                     }
-                    updateMulti();
-                    Debug.Log("X3 Worked Elio");
                     break;
                 case 5: //MultiC
-                    if (multiStored[2] != 0 && !UsedX2 && !UsedX3 && !UsedX4)
+                    if (gMode == GameMode.Slots && leverMode)
                     {
-                        multiStored[2]--;
-                        UsedX4 = true;
+                        if (multiStored[2] != 0 && !UsedX2 && !UsedX3 && !UsedX4)
+                        {
+                            multiStored[2]--;
+                            UsedX4 = true;
+                        }
+                        updateMulti();
+                        Debug.Log("X4 Worked Elio");
                     }
-                    updateMulti();
-                    Debug.Log("X4 Worked Elio");
                     break;
             }
 

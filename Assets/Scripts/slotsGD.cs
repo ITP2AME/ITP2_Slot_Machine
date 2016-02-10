@@ -55,8 +55,8 @@ namespace Meshadieme {
 			isMusicOff = false;
 			GM.Get().framework.gMode = (int)GameMode.Slots;
             isMusicOff = false;
-            highScoreName = new string[] { "Ali", "Martin", "Elio" };
-            highScore = new float[] { 501.0f, 500.0f, 499.0f };
+            highScoreName = new string[] { "Ali" };
+            highScore = new float[] { 10.0f };
 
         }
 		
