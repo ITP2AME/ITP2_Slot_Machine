@@ -778,6 +778,10 @@ namespace Meshadieme
                         Debug.Log("X4 Worked Elio");
                     }
                     break;
+                case 6: //Play Again
+                    Debug.Log("Reset Worked");
+                    resetSlot();
+                    break;
             }
 
         }
