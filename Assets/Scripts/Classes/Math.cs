@@ -14,7 +14,7 @@ namespace Meshadieme
             {
                 for (int i = toShuffle.Count - 1; i > 0; i--)
                 {
-                    int j = Random.Range(i, toShuffle.Count);
+                    int j = Random.Range(0,i);
                     //Debug.Log(j);
                     //Debug.Log(i);
                     //Debug.Log(toShuffle.Count);
