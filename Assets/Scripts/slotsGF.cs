@@ -111,7 +111,7 @@ namespace Meshadieme
         AudioSource[] pin2Audio; 
         AudioSource[] pin3Audio; 
         AudioSource[][] allPinAudio;
-        public AudioSource Coin_sound;
+        public AudioSource Extra_Credit_sound;
         public AudioSource GameOver_sound;
         public AudioSource MiniStarts;
         public AudioSource No_Equal_Symb;
@@ -127,9 +127,12 @@ namespace Meshadieme
         bool otherSpinA, otherSpinB, otherSpinC = false;
         int[] multiStored = new int[] { 1, 0, 0 };
         int[] defShuffle = new int[] { 5, 4, 4, 3, 3, 3, 2, 2, 2, 2, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0 };
-        int[] shuffleA = new int[] { 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0};
+        int[] shuffleA = new int[] { 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0, 0 };
         int[] shuffleB = new int[] { 5, 5, 4, 4, 4, 3, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0, 0 };
         int[] shuffleC = new int[] { 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 2, 2, 2, 1, 1, 1, 1, 0, 0 };
+
+        
+
         shuffleBag toUse;
         shuffleBag sbDef; //default shuffleBag random result
         shuffleBag sbTempA; //Custom shufflebag random result for when modified by secondary Pins
@@ -138,7 +141,7 @@ namespace Meshadieme
         int otherPinState = 0;
         int[] results = new int[] { 0, 0, 0, 0, 0, 0}; // first three for main Pins, second three for secondary Pins
 
-        float hscore;
+        //float hscore;
 
        
 
@@ -192,7 +195,7 @@ namespace Meshadieme
             allPinAudio[2] = GM.Get().scene.miscRefs[2].GetComponents<AudioSource>();
             allPinAudio[3] = GM.Get().scene.miscRefs[3].GetComponents<AudioSource>();
 
-            Coin_sound = GM.Get().scene.miscRefs[18].GetComponent<AudioSource>();
+            Extra_Credit_sound = GM.Get().scene.miscRefs[18].GetComponent<AudioSource>();
             GameOver_sound = GM.Get().scene.miscRefs[19].GetComponent<AudioSource>();
             MiniStarts = GM.Get().scene.miscRefs[20].GetComponent<AudioSource>();
             No_Equal_Symb = GM.Get().scene.miscRefs[21].GetComponent<AudioSource>();
@@ -407,7 +410,7 @@ namespace Meshadieme
                     else if (results[0] == 4) { gbp += bet * 10; }
                     else if (results[0] == 5) { gbp += bet * (Random.Range(0, 10)); }
 
-                    Coin_sound.Play();
+                    Extra_Credit_sound.Play();
 
                 }
 
@@ -605,9 +608,9 @@ namespace Meshadieme
 
             //Coin Update
             if       (result[1] >= 100.0f && result[1] < 200.0f) { gbp += 0.0f; result[0] = 1.0f; }
-            else  if (result[1] >= 200.0f && result[1] < 300.0f) { gbp += 1.0f; result[0] = 2.0f; Coin_sound.Play(); }
-            else if  (result[1] >= 300.0f && result[1] < 400.0f) { gbp += 3.0f; result[0] = 3.0f; Coin_sound.Play(); }
-            else if  (result[1] >= 400.0f)                       { gbp += 5.0f; result[0] = 4.0f; Coin_sound.Play(); }
+            else  if (result[1] >= 200.0f && result[1] < 300.0f) { gbp += 1.0f; result[0] = 2.0f; Extra_Credit_sound.Play();}
+            else if  (result[1] >= 300.0f && result[1] < 400.0f) { gbp += 3.0f; result[0] = 3.0f; Extra_Credit_sound.Play();}
+            else if  (result[1] >= 400.0f)                       { gbp += 5.0f; result[0] = 4.0f; Extra_Credit_sound.Play();}
             coinText.text = gbp.ToString();
 
             //Multiplier update
@@ -636,20 +639,20 @@ namespace Meshadieme
         {
             if (gMode == GameMode.Slots)
             {
-                if (TotScore > hscore )
+                if (TotScore > GM.Get().data.highScore[0])
                 {
-                    hscore = TotScore;
-                    GM.Get().data.highScore[0] = hscore;
+                    
+                    GM.Get().data.highScore[0] = TotScore;
                     GM.Get().data.saveGame();
                 }
-                Debug.Log(hscore);
+                Debug.Log(GM.Get().data.highScore[0]);
 
                 if (gbp <= 0)
                 {
                     //Call End game
                     
                     FinalGameScore.text = "Your Score: " + TotScore.ToString();
-                    HighScore.text = "High Score: " + hscore.ToString();
+                    HighScore.text = "High Score: " + GM.Get().data.highScore[0].ToString();
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[16].SetActive(true);
                     GameOver_sound.Play();

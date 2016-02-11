@@ -57,6 +57,7 @@ namespace Meshadieme {
             {
                 if (GM.Get().deleteSave) GM.Get().deleteSave = false;
                 resetSave();
+                saveGame();
             }
             else
             {
