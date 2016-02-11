@@ -83,7 +83,7 @@ namespace Meshadieme
         public GameMode gMode;
         public string[] helpTexts; //Modify in editor
         public float[] result;
-        Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet,TotalScore,CurrentMultUsed,FinalGameScore,HighScore;
+        Text helpText, coinText, pinAText, pinBText, pinCText, otherPinAText, otherPinBText, otherPinCText, extraMultiA, extraMultiB, extraMultiC, toBet,TotalScore,CurrentMultUsed,FinalGameScore,HighScore,Display_HighScore;
         Button coinButton;
         bool UsedX2 = false;
         bool UsedX3 = false;
@@ -160,6 +160,7 @@ namespace Meshadieme
             pinCText = GM.Get().scene.miscRefs[3].GetComponent<Text>();
             TotalScore = GM.Get().scene.miscRefs[13].GetComponent<Text>();
             HighScore = GM.Get().scene.miscRefs[17].GetComponent<Text>();
+            Display_HighScore = GM.Get().scene.miscRefs[22].GetComponent<Text>();
             FinalGameScore = GM.Get().scene.miscRefs[9].GetComponent<Text>();
             otherPinAText = GM.Get().scene.miscRefs[4].GetComponentInChildren<Text>();
             otherPinBText = GM.Get().scene.miscRefs[5].GetComponentInChildren<Text>();
@@ -210,10 +211,10 @@ namespace Meshadieme
 
 
             result = new float[2];
-            sbDef = new shuffleBag(10, defShuffle); //Scale is the number of times the shuffle bag stores multiple copies of the ratio before resetting (essentially maximimum times the best results should repeat kind of)
-            sbTempA = new shuffleBag(10, shuffleA);
-            sbTempB = new shuffleBag(10, shuffleB);
-            sbTempC = new shuffleBag(10, shuffleC);
+            sbDef = new shuffleBag(3, defShuffle); //Scale is the number of times the shuffle bag stores multiple copies of the ratio before resetting (essentially maximimum times the best results should repeat kind of)
+            sbTempA = new shuffleBag(3, shuffleA);
+            sbTempB = new shuffleBag(3, shuffleB);
+            sbTempC = new shuffleBag(3, shuffleC);
             //callMiniGame(MiniGames.mini1);
 
         }
@@ -670,6 +671,7 @@ namespace Meshadieme
             results[2] = sbDef.Next();
             //martin update the Pin images here to have random Pins at the start as well.
             updateMulti();
+            Display_HighScore.text = "High Score:   " + GM.Get().data.highScore[0].ToString();
         }
 
         void resetSlot() {

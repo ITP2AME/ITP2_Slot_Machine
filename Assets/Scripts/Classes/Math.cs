@@ -53,9 +53,16 @@ namespace Meshadieme
 
             public int Next()
             {
+                string list = "";
                 if (shuffle.Count == 0) resetBag();
                 int toReturn = shuffle[0];
                 shuffle.RemoveAt(0);
+                for (int i = 0; i < shuffle.Count; i++)
+                {
+                    list += shuffle[i].ToString() + ", ";
+                }
+
+                Debug.Log(list);
                 return toReturn;
             }
         }
