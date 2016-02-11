@@ -74,7 +74,7 @@ namespace Meshadieme
     public class slotsGF : gameFramework
     {
 
-        private float gbp = 5.0f;
+        private float gbp = 10.0f;
         public float TotScore = 0.0f;
         public float multiCurrent = 1.0f;
         public int miniGame;
@@ -88,6 +88,7 @@ namespace Meshadieme
         bool UsedX2 = false;
         bool UsedX3 = false;
         bool UsedX4 = false;
+        bool tutorialON = false;
 
         //variable for controlling the lever
         public bool leverMode;
@@ -169,6 +170,8 @@ namespace Meshadieme
             extraMultiB = GM.Get().scene.buttonRefs[4].GetComponentInChildren<Text>();
             extraMultiC = GM.Get().scene.buttonRefs[5].GetComponentInChildren<Text>();
             toBet = GM.Get().scene.miscRefs[8].GetComponent<Text>();
+            GM.Get().scene.miscRefs[23].SetActive(false);
+            GM.Get().scene.miscRefs[24].SetActive(false);
             gMode = 0;
 
 
@@ -419,17 +422,21 @@ namespace Meshadieme
                 //else { gbp += 1; }
 
                 coinText.text = gbp.ToString();
-
+                int RandomMini = Randomizer();
                 yield return new WaitForSeconds(1);
                 MiniStarts.Play();
                 miniGamePopUp.SetActive(true);
-                miniGameText.GetComponent<Text>().text = "Mini Game Name Goes Here";
+
+                if      (RandomMini == 0) { miniGameText.GetComponent<Text>().text = "Fruit Catcher"; }
+                else if (RandomMini == 1) { miniGameText.GetComponent<Text>().text = "Fruit Sorter"; }
+                else if (RandomMini == 2) { miniGameText.GetComponent<Text>().text = "Click The Fruit"; }
+
                 gMode = GameMode.MiniGame;
                 yield return new WaitForSeconds(5);
                 miniGamePopUp.SetActive(false);
               
 
-                switch (Randomizer())
+                switch (RandomMini)
                 {
                     case 0:
                         miniGame_Type = 1;
@@ -608,8 +615,8 @@ namespace Meshadieme
             TotalScore.text = TotScore.ToString();
 
             //Coin Update
-            if       (result[1] >= 100.0f && result[1] < 200.0f) { gbp += 0.0f; result[0] = 1.0f; }
-            else  if (result[1] >= 200.0f && result[1] < 300.0f) { gbp += 1.0f; result[0] = 2.0f; Extra_Credit_sound.Play();}
+            if       (result[1] < 100.0f )                       { gbp += 0.0f; result[0] = 1.0f; }
+            else  if (result[1] >= 100.0f && result[1] < 300.0f) { gbp += 1.0f; result[0] = 2.0f; Extra_Credit_sound.Play();}
             else if  (result[1] >= 300.0f && result[1] < 400.0f) { gbp += 3.0f; result[0] = 3.0f; Extra_Credit_sound.Play();}
             else if  (result[1] >= 400.0f)                       { gbp += 5.0f; result[0] = 4.0f; Extra_Credit_sound.Play();}
             coinText.text = gbp.ToString();
@@ -678,7 +685,10 @@ namespace Meshadieme
 
             GM.Get().scene.miscRefs[16].SetActive(false);
             GM.Get().scene.miscRefs[15].SetActive(true);
-            
+
+            GM.Get().scene.miscRefs[23].SetActive(false);
+            GM.Get().scene.miscRefs[24].SetActive(false);
+
 
             gbp = 5.0f;
             coinText.text = gbp.ToString();
@@ -805,6 +815,32 @@ namespace Meshadieme
                 case 6: //Play Again
                     Debug.Log("Reset Worked");
                     resetSlot();
+                    break;
+                case 7: //tutorial
+                    Debug.Log("Tutorial pressed");
+                    if (tutorialON) { GM.Get().scene.miscRefs[23].SetActive(false);
+                                     GM.Get().scene.miscRefs[24].SetActive(false);
+                                     tutorialON = false; }
+
+                    else            { GM.Get().scene.miscRefs[23].SetActive(true);
+                                      GM.Get().scene.miscRefs[24].SetActive(true);
+                                      tutorialON = true; }
+                    break;
+                case 8: //tutorial
+                    Debug.Log("Tutorial pressed");
+                    if (tutorialON)
+                    {
+                        GM.Get().scene.miscRefs[23].SetActive(false);
+                        GM.Get().scene.miscRefs[24].SetActive(false);
+                        tutorialON = false;
+                    }
+
+                    else
+                    {
+                        GM.Get().scene.miscRefs[23].SetActive(true);
+                        GM.Get().scene.miscRefs[24].SetActive(true);
+                        tutorialON = true;
+                    }
                     break;
             }
 

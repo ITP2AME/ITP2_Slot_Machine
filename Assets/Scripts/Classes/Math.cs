@@ -62,7 +62,7 @@ namespace Meshadieme
                     list += shuffle[i].ToString() + ", ";
                 }
 
-                Debug.Log(list);
+                //Debug.Log(list);
                 return toReturn;
             }
         }
