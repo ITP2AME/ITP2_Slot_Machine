@@ -38,19 +38,35 @@ namespace Meshadieme {
 			//Other Game Data = ScriptableObjects / Custom Classes / Character Stats etc.
 		}
 		
-		public override void initSaveGame() {
-			Debug.Log ("InitSaveGame");
-			if (!PlayerPrefs.HasKey("_isMusicOff") || GM.Get ().deleteSave ) {
-				if ( GM.Get ().deleteSave ) GM.Get ().deleteSave = false;
-				resetSave ();
-			} else {
+		//public override void initSaveGame() {
+		//	Debug.Log ("InitSaveGame");
+		//	if (!PlayerPrefs.HasKey("_isMusicOff") || GM.Get ().deleteSave ) {
+		//		if ( GM.Get ().deleteSave ) GM.Get ().deleteSave = false;
+		//		resetSave ();
+		//	} else {
+  //              isMusicOff = PlayerPrefsX.GetBool("_isMusicOff");
+  //              highScoreName = PlayerPrefsX.GetStringArray("_highScoreName");
+  //              highScore = PlayerPrefsX.GetFloatArray("_highScore");
+  //          }
+		//}
+
+        public override void initSaveGame()
+        {
+            Debug.Log("InitSaveGame" + PreviewLabs.PlayerPrefs.HasKey("_isMusicOff") + GM.Get().deleteSave);
+            if (!PreviewLabs.PlayerPrefs.HasKey("_isMusicOff") || GM.Get().deleteSave)
+            {
+                if (GM.Get().deleteSave) GM.Get().deleteSave = false;
+                resetSave();
+            }
+            else
+            {
                 isMusicOff = PlayerPrefsX.GetBool("_isMusicOff");
                 highScoreName = PlayerPrefsX.GetStringArray("_highScoreName");
                 highScore = PlayerPrefsX.GetFloatArray("_highScore");
             }
-		}
-		
-		public override void resetSave () {
+        }
+
+        public override void resetSave () {
 			Debug.Log ("resetSave");
 			isMusicOff = false;
 			GM.Get().framework.gMode = (int)GameMode.Slots;
