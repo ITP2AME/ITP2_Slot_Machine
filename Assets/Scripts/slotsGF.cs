@@ -111,9 +111,14 @@ namespace Meshadieme
         AudioSource[] pin2Audio; 
         AudioSource[] pin3Audio; 
         AudioSource[][] allPinAudio;
+        public AudioSource Coin_sound;
+        public AudioSource GameOver_sound;
+        public AudioSource MiniStarts;
+        public AudioSource No_Equal_Symb;
 
         GameObject miniGameText;
         GameObject miniGamePopUp;
+        
 
         public GameController_3 gameController_3;
         public GameController_2 gameController_2;
@@ -186,6 +191,11 @@ namespace Meshadieme
             allPinAudio[1] = GM.Get().scene.miscRefs[1].GetComponents<AudioSource>();
             allPinAudio[2] = GM.Get().scene.miscRefs[2].GetComponents<AudioSource>();
             allPinAudio[3] = GM.Get().scene.miscRefs[3].GetComponents<AudioSource>();
+
+            Coin_sound = GM.Get().scene.miscRefs[18].GetComponent<AudioSource>();
+            GameOver_sound = GM.Get().scene.miscRefs[19].GetComponent<AudioSource>();
+            MiniStarts = GM.Get().scene.miscRefs[20].GetComponent<AudioSource>();
+            No_Equal_Symb = GM.Get().scene.miscRefs[21].GetComponent<AudioSource>();
 
             miniGameText = GameObject.FindGameObjectWithTag("miniGameText");
             miniGamePopUp = GameObject.FindGameObjectWithTag("miniGamePopUp");
@@ -381,10 +391,12 @@ namespace Meshadieme
             //    (results[0] != results[1] && results[0] != results[2] && results[1] != results[2]) || 
             //    (results[0] != results[1] && results[0] != results[2] && results[1] != results[2]))
 
-            if (((results[0] == results[1]) && (results[1] == results[2])) ||
-                ((results[0] == results[1]) && (results[1] != results[2])) ||
-                ((results[0] != results[1]) && (results[1] == results[2])) ||
-                ((results[0] == results[2]) && (results[1] != results[2])))
+            //if (((results[0] == results[1]) && (results[1] == results[2])) ||
+            //    ((results[0] == results[1]) && (results[1] != results[2])) ||
+            //    ((results[0] != results[1]) && (results[1] == results[2])) ||
+            //    ((results[0] == results[2]) && (results[1] != results[2])))
+
+          if(results[0] == results[1] || results[0] == results[2] || results[1] == results[2])
             {
                 if ((results[0] == results[1]) && (results[1] == results[2]))
                 {
@@ -394,7 +406,8 @@ namespace Meshadieme
                     else if (results[0] == 3) { gbp += bet * 5; }
                     else if (results[0] == 4) { gbp += bet * 10; }
                     else if (results[0] == 5) { gbp += bet * (Random.Range(0, 10)); }
-                    //coinText.text = gbp.ToString();
+
+                    Coin_sound.Play();
 
                 }
 
@@ -403,7 +416,8 @@ namespace Meshadieme
 
                 coinText.text = gbp.ToString();
 
-                //yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(1);
+                MiniStarts.Play();
                 miniGamePopUp.SetActive(true);
                 miniGameText.GetComponent<Text>().text = "Mini Game Name Goes Here";
                 gMode = GameMode.MiniGame;
@@ -436,6 +450,8 @@ namespace Meshadieme
                  UsedX4 = false;
 
                 updateMulti();
+
+                No_Equal_Symb.Play();
 
                 checkHighScore();
             }
@@ -589,9 +605,9 @@ namespace Meshadieme
 
             //Coin Update
             if       (result[1] >= 100.0f && result[1] < 200.0f) { gbp += 0.0f; result[0] = 1.0f; }
-            else  if (result[1] >= 200.0f && result[1] < 300.0f) { gbp += 1.0f; result[0] = 2.0f; }
-            else if  (result[1] >= 300.0f && result[1] < 400.0f) { gbp += 3.0f; result[0] = 3.0f; }
-            else if  (result[1] >= 400.0f)                       { gbp += 5.0f; result[0] = 4.0f; }
+            else  if (result[1] >= 200.0f && result[1] < 300.0f) { gbp += 1.0f; result[0] = 2.0f; Coin_sound.Play(); }
+            else if  (result[1] >= 300.0f && result[1] < 400.0f) { gbp += 3.0f; result[0] = 3.0f; Coin_sound.Play(); }
+            else if  (result[1] >= 400.0f)                       { gbp += 5.0f; result[0] = 4.0f; Coin_sound.Play(); }
             coinText.text = gbp.ToString();
 
             //Multiplier update
@@ -636,7 +652,8 @@ namespace Meshadieme
                     HighScore.text = "High Score: " + hscore.ToString();
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[16].SetActive(true);
-                    
+                    GameOver_sound.Play();
+
                 }
 
             }
