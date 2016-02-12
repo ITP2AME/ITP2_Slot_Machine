@@ -92,19 +92,19 @@ public class GameController_3 : MonoBehaviour {
         //Increasing Gravity when 30 seconds are left
         if (timeRemaining < 30)
         {
-            CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
-            LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
-            OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
-            BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
+            CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.25f;
+            LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.25f;
+            OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.25f;
+            BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.25f;
         }
 
         //Further increasing gravity when 10 seconds are left
         if (timeRemaining <= 10)
         {
-            CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.4f;
-            LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.4f;
-            OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.4f;
-            BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.4f;
+            CherryPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
+            LemonPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
+            OrangePrefab.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
+            BananaPrefab.GetComponent<Rigidbody2D>().gravityScale = 0.3f;
         }
 
     }

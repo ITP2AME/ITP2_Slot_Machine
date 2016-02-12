@@ -76,7 +76,7 @@ public class GameController_2 : MonoBehaviour {
     //Updates the remaining time for the minigame
     void UpdateTime()
     {
-        if (timeRemaining > 0) { timeText.text = "Time: " + (int)timeRemaining; }
+        if (timeRemaining > 0) {timeText.text = "Time: " + (int)timeRemaining; }
         else                   {timeText.text = "Time's up! "; GM.Get().framework.endMiniGame();}
     }
 

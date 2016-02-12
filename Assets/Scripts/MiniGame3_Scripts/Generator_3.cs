@@ -17,10 +17,10 @@ public class Generator_3 : MonoBehaviour {
     public void Init()
     {
         //Setting the gravity scale of Fruits Prefabs
-        Cherry.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
-        Lemon.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
-        Orange.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
-        Banana.GetComponent<Rigidbody2D>().gravityScale = 0.2f;
+        Cherry.GetComponent<Rigidbody2D>().gravityScale = 0.15f;
+        Lemon.GetComponent<Rigidbody2D>().gravityScale = 0.15f;
+        Orange.GetComponent<Rigidbody2D>().gravityScale = 0.15f;
+        Banana.GetComponent<Rigidbody2D>().gravityScale = 0.15f;
 
         //Setting The rate at which the fruits are spawn
         rateSpawn = 0.5f;
@@ -36,7 +36,7 @@ public class Generator_3 : MonoBehaviour {
     {
         //Adjusting the spawn rate according to the time left (time left is set in GameController_3)
         if (gameController.timeRemaining < 30 && gameController.timeRemaining > 10){rateSpawn = 0.40f;}
-        if (gameController.timeRemaining <= 10){ rateSpawn = 0.30f;}
+        if (gameController.timeRemaining <= 10){ rateSpawn = 0.25f;}
 
     }
 

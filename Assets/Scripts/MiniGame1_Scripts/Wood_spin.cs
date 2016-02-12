@@ -13,6 +13,6 @@ public class Wood_spin : MonoBehaviour {
 	void Update () {
 
         //Adds Rotation to the woos panels
-        this.transform.Rotate(0, 0, -2.0f);
+        this.transform.Rotate(0, 0, -1.75f);
     }
 }
