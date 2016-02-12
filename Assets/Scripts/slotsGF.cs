@@ -77,9 +77,9 @@ namespace Meshadieme
     public class slotsGF : gameFramework
     {
         //Declaration of Global Variables and other useful objects
-        private float gbp = 10.0f;
-        public float TotScore = 0.0f;
-        public float multiCurrent = 1.0f;
+        private float gbp = 10.0f; //Credits
+        public float TotScore = 0.0f; //Total current Score
+        public float multiCurrent = 1.0f; // Current multiplier
         public int miniGame;
         public int miniGame_Type;
         private float bet = 1.0f;
@@ -654,6 +654,7 @@ namespace Meshadieme
                     HighScore.text = "High Score: " + GM.Get().data.highScore[0].ToString();
                     GM.Get().scene.miscRefs[15].SetActive(false);
                     GM.Get().scene.miscRefs[16].SetActive(true);
+                    GM.Get().data.saveGame();
                     GameOver_sound.Play();
 
                 }
@@ -682,7 +683,7 @@ namespace Meshadieme
             GM.Get().scene.miscRefs[24].SetActive(false);
 
 
-            gbp = 5.0f;
+            gbp = 10.0f;
             coinText.text = gbp.ToString();
 
             TotScore = 0.0f;
@@ -696,6 +697,8 @@ namespace Meshadieme
 
             bet = 1.0f;
             toBet.text = bet.ToString();
+
+            Display_HighScore.text = "High Score:   " + GM.Get().data.highScore[0].ToString();
 
         }
 
