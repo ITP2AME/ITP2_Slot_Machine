@@ -59,6 +59,7 @@ In general we feel like we did really good in terms of coordinations and achievi
 ##Workload Matrix:
 
 |  Name  |  Responsility |
+| --- | --- |
 | Mohammad Ali | Basic scene and code structure / framework | 
 |  | Fisher Yates shuffling lists | 
 |  | shuffleBag implementation | 
