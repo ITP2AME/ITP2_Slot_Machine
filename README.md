@@ -39,10 +39,9 @@ In “Fruit Sorter”, the player has to sort the falling fruits in the correct bask
 
 In “Click the Fruit” the fruits are randomly generated at different locations on the screen and start falling down. The player has to click on the currently displayed fruit before they hit the spikes to gain points. If the fruit displayed hit the spikes or the player clicks the wrong fruits points are lost. Once again, difficulty is increased towards the end of the game.
 
-From the technical point of view each minigame has its own Game Controller object and script (GameController, Game_Controller_2, Game_Controller_3 respectively), a fruit generator Object and script (Cherries_Generator, Fruit_Generator, Generator_3 respectively) as well as scripts to control the behaviour of the baskets (in Fruit Catcher and Fruit Sorter) or the interaction with the fruits on click (Fruit Sorter and Click the fruit). Other scripts are present in each minigame to deal with individual properties of the spikes objects, the wood panels and the Current Fruit display icon. The Game Controller Objects keep track of time left to play, the score, difficulty level and connect the minigames with the main slot framework returning the score at the end of each game session.
+From the technical point of view each minigame has its own Game Controller object and script (GameController, Game_Controller_2, Game_Controller_3 respectively), a fruit generator Object and script (Cherries_Generator, Fruit_Generator, Generator_3 respectively) as well as scripts to control the behaviour of the baskets (in Fruit Catcher and Fruit Sorter) or the interaction with the fruits on click (Fruit_Move, Fruit_Move_3). Other scripts are present in each minigame to deal with individual properties of the spikes objects, the wood panels and the Current Fruit display icon. The Game Controller Objects keep track of time left to play, the score, difficulty level and connect the minigames with the main slot framework returning the score at the end of each game session.
 
-Besides the minigame side of the project I also contributed to the main framework script by tweaking the logic of the slot machine (Winning/loosing/bonus scenarios), optimized the multiplier, betting and scoring system as well as adding sounds, on screen instruction and Game Over/ Continue screen. Finally, I tested and debugged the finalized project and corrected any detected errors before the submission.
-
+Besides the minigame side of the project I also contributed to the main framework script (slotsGF) by tweaking the logic of the slot machine (Winning/loosing/bonus scenarios), optimized the multiplier, betting and scoring system as well as adding sounds, on screen instruction and Game Over/ Continue screen. Finally, I tested and debugged the finalized project and corrected any detected errors before the submission.
 
 ###Martin -
 
@@ -55,6 +54,8 @@ In the function stopPins (see slotsGF) the coroutine mentioned before can be see
 ##Improvements:
 
 In general we feel like we did really good in terms of coordinations and achieving our target. On a personal level I (Ali) think I could improve my template structure to make it easier for non technical people to work in, although both my teammates seemed to grasp it fairly quickly, certain features were not as obvious (like where to find an instance reference to what). There is probably some space for improvement there. Also I felt like the team did not make use of Git effectively (personal / feature branches etc.) which could also be improved upon. 
+
+As my first full-fledged Unity project I (Elio) learned a lot from this assignment and from my teammates and I’m satisfied of what I/we achieved. There’s definitely room for improvements on how the minigames are implemented and optimized, for example using a unified minigames framework instead of different game controllers. This is something I will definitely try to implement in my next project. Overall I was happy the three of us were able to compromise and complete the project without major hurdles.
 
 ##Workload Matrix:
 
