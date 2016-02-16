@@ -24,9 +24,9 @@ https://www.youtube.com/watch?v=_l4ez8yD8lg
 
 ###Ali -
 
-	I have a singleton instance as a game manager (see _GM gameobject or Managers/GM ), this game manager instance has variables to any other manager script that we may need access to in the current case the scene (see _SM gameobject or Managers/sceneManager ) and framework (see slotsGF) scripts. The scene manager holds all the references (to objects / ui / prefabs) in the particular scene.The framework is the bulk of the game play code ( score management and probability ratios etc ) excluding small script on objects to add behaviour. There is also a Math class (see Classes/Math ) that does the probability using shuffleBag logic. Essentially the 3 main pins spin randomly (fake spin) until a certain time has passed then shows a result. In the time taken for the pins to stop the result is precalculated using one of 4 different shuffleBags with variating rates for individual outcomes (defShuffle, shuffleA, shuffleB etc. in slotsGF) The shuffleBags are scaled to 3 which seem like a reasonable number of potential repeats (to get a minimum of three possible ‘hardest to get’ elements from the shufflebag). Also the shuffleBag uses a Fisher Yates Shuffle to randomize the elements in the list. 
+I have a singleton instance as a game manager (see _GM gameobject or Managers/GM ), this game manager instance has variables to any other manager script that we may need access to in the current case the scene (see _SM gameobject or Managers/sceneManager ) and framework (see slotsGF) scripts. The scene manager holds all the references (to objects / ui / prefabs) in the particular scene.The framework is the bulk of the game play code ( score management and probability ratios etc ) excluding small script on objects to add behaviour. There is also a Math class (see Classes/Math ) that does the probability using shuffleBag logic. Essentially the 3 main pins spin randomly (fake spin) until a certain time has passed then shows a result. In the time taken for the pins to stop the result is precalculated using one of 4 different shuffleBags with variating rates for individual outcomes (defShuffle, shuffleA, shuffleB etc. in slotsGF) The shuffleBags are scaled to 3 which seem like a reasonable number of potential repeats (to get a minimum of three possible ‘hardest to get’ elements from the shufflebag). Also the shuffleBag uses a Fisher Yates Shuffle to randomize the elements in the list. 
 
-	So when you pull the lever the first time it starts spinning the pins, while they are spinning you have the option to increase your probability of getting a rarer outcome (not the probability of the outcomes being the same) by switching between shufflebags. To do this you click the lever again and then try to click it two more times to stop the secondary pins (the numbers below the picture pins) to stop as close to each other. So for example having all three to stop at 3 will boost your chances to get the most rare pin result (in the primary picture pins).
+So when you pull the lever the first time it starts spinning the pins, while they are spinning you have the option to increase your probability of getting a rarer outcome (not the probability of the outcomes being the same) by switching between shufflebags. To do this you click the lever again and then try to click it two more times to stop the secondary pins (the numbers below the picture pins) to stop as close to each other. So for example having all three to stop at 3 will boost your chances to get the most rare pin result (in the primary picture pins).
 
 
 ###Elio -
@@ -54,23 +54,23 @@ In the function stopPins (see slotsGF) the coroutine mentioned before can be see
 
 ##Improvements:
 
-	In general we feel like we did really good in terms of coordinations and achieving our target. On a personal level I (Ali) think I could improve my template structure to make it easier for non technical people to work in, although both my teammates seemed to grasp it fairly quickly, certain features were not as obvious (like where to find an instance reference to what). There is probably some space for improvement there. Also I felt like the team did not make use of Git effectively (personal / feature branches etc.) which could also be improved upon. 
+In general we feel like we did really good in terms of coordinations and achieving our target. On a personal level I (Ali) think I could improve my template structure to make it easier for non technical people to work in, although both my teammates seemed to grasp it fairly quickly, certain features were not as obvious (like where to find an instance reference to what). There is probably some space for improvement there. Also I felt like the team did not make use of Git effectively (personal / feature branches etc.) which could also be improved upon. 
 
 ##Workload Matrix:
 
  |  Name  |  Responsility | 
- | -------------------------- | ----------------------------- | 
+ | --- | --- | 
  | Mohammad Ali | Basic scene and code structure / framework | 
  |  | Fisher Yates shuffling lists | 
  |  | shuffleBag implementation | 
  |  | Probability logic | 
  |  | Integration and debugging |
- | -------------------------- | ----------------------------- | 
+ | --- | --- | 
  | Elio de Berardinis |  Mini-Games design and development.  | 
  |  | Optimization of Betting, multipliers and scoring system.  |  
  |  | Sounds, Instructions and Game Over implementation.  | 
  |  | Testing, debugging and polishing. | 
- | -------------------------- | ----------------------------- | 
+ | --- | --- | 
  | Martin Skarregaard | Graphics, animations and sounds | 
  |  |  for the slot machine, including  | 
  |  | implementation of these. | 
