@@ -58,21 +58,18 @@ In general we feel like we did really good in terms of coordinations and achievi
 
 ##Workload Matrix:
 
- |  Name  |  Responsility | 
- | --- | --- | 
- | Mohammad Ali | Basic scene and code structure / framework | 
- |  | Fisher Yates shuffling lists | 
- |  | shuffleBag implementation | 
- |  | Probability logic | 
- |  | Integration and debugging |
- | --- | --- | 
- | Elio de Berardinis |  Mini-Games design and development.  | 
- |  | Optimization of Betting, multipliers and scoring system.  |  
- |  | Sounds, Instructions and Game Over implementation.  | 
- |  | Testing, debugging and polishing. | 
- | --- | --- | 
- | Martin Skarregaard | Graphics, animations and sounds | 
- |  |  for the slot machine, including  | 
- |  | implementation of these. | 
- |  | Pop-up “sign” graphics including implementation of this. | 
+|  Name  |  Responsility |
+| Mohammad Ali | Basic scene and code structure / framework | 
+|  | Fisher Yates shuffling lists | 
+|  | shuffleBag implementation | 
+|  | Probability logic | 
+|  | Integration and debugging |
+| Elio de Berardinis |  Mini-Games design and development.  | 
+|  | Optimization of Betting, multipliers and scoring system.  |  
+|  | Sounds, Instructions and Game Over implementation.  | 
+|  | Testing, debugging and polishing. | 
+| Martin Skarregaard | Graphics, animations and sounds | 
+|  |  for the slot machine, including  | 
+|  | implementation of these. | 
+|  | Pop-up “sign” graphics including implementation of this. | 
 
