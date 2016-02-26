@@ -75,3 +75,16 @@ As my first full-fledged Unity project I (Elio) learned a lot from this assignme
 |  | implementation of these. | 
 |  | Pop-up “sign” graphics including implementation of this. | 
 
+##Images:
+
+![Alt text](https://github.com/ITP2AME/ITP2_Slot_Machine/blob/master/Images_Report/Main_no_instr.JPG?raw=true"Screen 1")
+
+![Alt text](https://github.com/ITP2AME/ITP2_Slot_Machine/blob/master/Images_Report/Mini_1.JPG?raw=true"Screen 2")
+
+![Alt text](https://github.com/ITP2AME/ITP2_Slot_Machine/blob/master/Images_Report/Mini_2.JPG?raw=true"Screen 3")
+
+![Alt text](https://github.com/ITP2AME/ITP2_Slot_Machine/blob/master/Images_Report/Mini_3.JPG?raw=true"Screen 4")
+
+![Alt text](https://github.com/ITP2AME/ITP2_Slot_Machine/blob/master/Images_Report/GameOver.JPG?raw=true"Screen 5")
+
+
