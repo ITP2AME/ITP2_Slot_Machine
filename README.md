@@ -77,13 +77,23 @@ As my first full-fledged Unity project I (Elio) learned a lot from this assignme
 
 ##Images:
 
+### Main Interface
+
 ![Alt text](https://github.com/ITP2AME/ITP2_Slot_Machine/blob/master/Images_Report/Main_no_instr.JPG?raw=true"Screen 1")
+
+### Minigame 1: Catch the Fruit
 
 ![Alt text](https://github.com/ITP2AME/ITP2_Slot_Machine/blob/master/Images_Report/Mini_1.JPG?raw=true"Screen 2")
 
+### Minigame 2: Fruit Sorter
+
 ![Alt text](https://github.com/ITP2AME/ITP2_Slot_Machine/blob/master/Images_Report/Mini_2.JPG?raw=true"Screen 3")
 
+### Minigame 3: Click the Fruit
+
 ![Alt text](https://github.com/ITP2AME/ITP2_Slot_Machine/blob/master/Images_Report/Mini_3.JPG?raw=true"Screen 4")
+
+### GameOver Screen
 
 ![Alt text](https://github.com/ITP2AME/ITP2_Slot_Machine/blob/master/Images_Report/GameOver.JPG?raw=true"Screen 5")
 
